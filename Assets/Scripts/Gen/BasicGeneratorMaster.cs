@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine;
 
 public class BasicGeneratorMaster : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class BasicGeneratorMaster : MonoBehaviour
         WEST = 2,
         EAST = 3
     };
-    
+
+    [SerializeField]
+    Sprite _tmpRoomImg;
 
     [SerializeField]
     private Vector2Int _gridSize;
@@ -28,7 +31,7 @@ public class BasicGeneratorMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Generate();
     }
 
     // Update is called once per frame
@@ -80,15 +83,17 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void Generate()
     {
-        _rooms[_startPos] = new BasicRoom();
-
         GenAtRoom(_startPos);
     }
 
     void GenAtRoom(Vector2Int pos)
     {
-        _rooms[pos] = new BasicRoom();
+        Debug.Log(pos);
+        _rooms.Add(pos, new BasicRoom());
         GameObject tmp = new GameObject("testRoom");
+        SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
+        sr.sprite = _tmpRoomImg;
+        tmp.transform.position = new Vector3(pos.x, pos.y, 0);
         bool[] possibilites = new bool[4];/*{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };*/
 
         bool done = Random.Range(0, 100) <= 10;
@@ -106,17 +111,28 @@ public class BasicGeneratorMaster : MonoBehaviour
             if (possibilites[i])
             {
                 //Check if room exist
-                if (room(pos + GetOffset((Cardinals)i)))
+                if (_rooms.ContainsKey(pos + GetOffset((Cardinals)i)))
                 {
                     //l> if yes, rand connect
                     bool connect = Random.Range(0, 100) > 50;
-                    //TODO
+                    if (connect)
+                    {
+                        GameObject lrGo = new GameObject("Connection");
+                        LineRenderer lr = lrGo.AddComponent<LineRenderer>();
+                        lr.positionCount = 2;
+                        lr.SetPosition(0, new Vector3(pos.x, pos.y, 0));
+                        Vector2Int tmpVec = pos + GetOffset((Cardinals)i);
+                        Vector3 tmpP = new Vector3(tmpVec.x, tmpVec.y, 0);
+                        lr.SetPosition(1, tmpP);
+                        lr.widthMultiplier = 0.1f;
+                    }
                 }
                 else
                 {
                     //l> else, rand create
                     bool create = Random.Range(0, 100) > 50;
                     if (create) GenAtRoom(pos + GetOffset((Cardinals)i));
+                    //TODO Make connection
                 }
             }
         }
