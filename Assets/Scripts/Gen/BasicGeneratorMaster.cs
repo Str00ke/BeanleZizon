@@ -16,11 +16,11 @@ public class BasicGeneratorMaster : MonoBehaviour
     [SerializeField]
     private Vector2Int _gridSize;
 
-    private Dictionary<Vector2Int, Room> _rooms = new();
+    private Dictionary<Vector2Int, BasicRoom> _rooms = new();
  
     private Vector2Int _startPos = Vector2Int.zero;
 
-    public Room room(Vector2Int value)
+    public BasicRoom room(Vector2Int value)
     {
         return _rooms[value];
     }
@@ -80,30 +80,46 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void Generate()
     {
-        bool canGen = true;
-        Vector2Int currPos = _startPos;
+        _rooms[_startPos] = new BasicRoom();
+
+        GenAtRoom(_startPos);
+    }
+
+    void GenAtRoom(Vector2Int pos)
+    {
+        _rooms[pos] = new BasicRoom();
+        GameObject tmp = new GameObject("testRoom");
         bool[] possibilites = new bool[4];/*{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };*/
-        while(canGen) 
+
+        bool done = Random.Range(0, 100) <= 10;
+        if (done) return;
+
+        //Check if OOB
+        possibilites[(ushort)Cardinals.NORTH] = !((pos + GetOffset(Cardinals.NORTH)).x < 0);
+        possibilites[(ushort)Cardinals.SOUTH] = !((pos + GetOffset(Cardinals.SOUTH)).x > _gridSize.x);
+        possibilites[(ushort)Cardinals.EAST] = !((pos + GetOffset(Cardinals.EAST)).y < 0);
+        possibilites[(ushort)Cardinals.WEST] = !((pos + GetOffset(Cardinals.WEST)).y > _gridSize.y);
+
+        //For cardinals:
+        for (ushort i = 0; i < 4; i++)
         {
-            _rooms[_startPos] = new Room();
-
-            //Check if OOB
-            possibilites[(ushort)Cardinals.NORTH] = !((currPos.x - 1) < 0);
-            possibilites[(ushort)Cardinals.SOUTH] = !((currPos.x + 1) > _gridSize.x);
-            possibilites[(ushort)Cardinals.EAST]  = !((currPos.y - 1) < 0);
-            possibilites[(ushort)Cardinals.WEST]  = !((currPos.y + 1) > _gridSize.y);
-
-            //For cardinals:
-            foreach(bool card in possibilites)
+            if (possibilites[i])
             {
-                if (card)
+                //Check if room exist
+                if (room(pos + GetOffset((Cardinals)i)))
                 {
-                    //Check if room exist
-                    if(room)
+                    //l> if yes, rand connect
+                    bool connect = Random.Range(0, 100) > 50;
+                    //TODO
+                }
+                else
+                {
+                    //l> else, rand create
+                    bool create = Random.Range(0, 100) > 50;
+                    if (create) GenAtRoom(pos + GetOffset((Cardinals)i));
                 }
             }
-            //l> if yes, rand connect
-            //l> else, rand create
         }
     }
+
 }
