@@ -80,6 +80,9 @@ public class Player : MonoBehaviour {
     // Collectible attributes
     private int _keyCount;
     public int KeyCount { get { return _keyCount; } set { _keyCount = value; } }
+    
+    private int _bombCount;
+    public int BombCount { get { return _bombCount; } set { _bombCount = value; } }
 
 	// Dungeon position
 	private Room _room = null;
