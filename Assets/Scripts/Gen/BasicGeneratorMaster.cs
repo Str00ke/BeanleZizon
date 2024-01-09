@@ -37,7 +37,21 @@ public class BasicGeneratorMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.R)) 
+        {
+            var arr = FindObjectsByType<BasicRoom>(FindObjectsSortMode.None);
+            var arr2 = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
+            foreach (var obj in arr)
+            {
+                Destroy(obj.gameObject);
+            }
+            foreach (var obj in arr2)
+            {
+                Destroy(obj.gameObject);
+            }
+            _rooms.Clear();
+            Generate();
+        }
     }
 
     Vector2Int GetOffset(Cardinals card)
@@ -91,6 +105,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         Debug.Log(pos);
         _rooms.Add(pos, new BasicRoom());
         GameObject tmp = new GameObject("testRoom");
+        tmp.AddComponent<BasicRoom>();
         SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
         sr.sprite = _tmpRoomImg;
         tmp.transform.position = new Vector3(pos.x, pos.y, 0);
@@ -131,8 +146,18 @@ public class BasicGeneratorMaster : MonoBehaviour
                 {
                     //l> else, rand create
                     bool create = Random.Range(0, 100) > 50;
-                    if (create) GenAtRoom(pos + GetOffset((Cardinals)i));
-                    //TODO Make connection
+                    if (create)
+                    {
+                        GameObject lrGo = new GameObject("Connection");
+                        LineRenderer lr = lrGo.AddComponent<LineRenderer>();
+                        lr.positionCount = 2;
+                        lr.SetPosition(0, new Vector3(pos.x, pos.y, 0));
+                        Vector2Int tmpVec = pos + GetOffset((Cardinals)i);
+                        Vector3 tmpP = new Vector3(tmpVec.x, tmpVec.y, 0);
+                        lr.SetPosition(1, tmpP);
+                        lr.widthMultiplier = 0.1f;
+                        GenAtRoom(pos + GetOffset((Cardinals)i));
+                    }
                 }
             }
         }
