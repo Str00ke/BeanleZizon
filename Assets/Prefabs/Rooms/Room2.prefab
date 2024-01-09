@@ -1120,9 +1120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartRoom: 0
-  position: {x: 1, y: 0}
-  size: {x: 1, y: 2}
+  <IsStartRoom>k__BackingField: 0
+  <IsEndRoom>k__BackingField: 0
+  <IsSecretRoom>k__BackingField: 0
+  <Size>k__BackingField: {x: 1, y: 2}
+  <Position>k__BackingField: {x: 1, y: 0}
 --- !u!50 &3816823355130275087
 Rigidbody2D:
   serializedVersion: 4
