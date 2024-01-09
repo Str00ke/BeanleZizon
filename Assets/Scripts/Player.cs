@@ -84,8 +84,11 @@ public class Player : MonoBehaviour {
     private int _bombCount;
     public int BombCount { get { return _bombCount; } set { _bombCount = value; } }
 
-	// Dungeon position
-	private Room _room = null;
+    [Header("Input")]
+    public GameObject bombPrefab = null;
+
+    // Dungeon position
+    private Room _room = null;
 	public Room Room { get { return _room; } }
 
 	private void Awake () {
@@ -154,6 +157,9 @@ public class Player : MonoBehaviour {
             }
             if(Input.GetButtonDown("Fire1")) {
                 Attack();
+            }
+            if(Input.GetButtonDown("Fire2")) {
+                UseBomb();
             }
         } else {
             _direction = Vector2.zero;
@@ -238,6 +244,19 @@ public class Player : MonoBehaviour {
             return;
         lastAttackTime = Time.time;
         SetState(STATE.ATTACKING);
+    }
+    
+    /// <summary>
+	/// Instanciate Bomb prefab if player has at least 1 bomb in BombCount.
+    /// </summary>
+	private void UseBomb()
+    {
+        if (_bombCount <= 0)
+            return;
+
+        //Instanciate a Bomb
+        GameObject.Instantiate(bombPrefab, transform.position, Quaternion.identity);
+        BombCount--;
     }
 
     /// <summary>

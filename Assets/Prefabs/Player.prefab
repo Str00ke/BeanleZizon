@@ -267,6 +267,8 @@ MonoBehaviour:
   attackCooldown: 0.3
   orientation: 1
   controllerDeadZone: 0.3
+  bombPrefab: {fileID: 7725945197443063864, guid: 44e3ccc57dc2cd849abc1cc7c7a7bd06,
+    type: 3}
 --- !u!210 &3061304262239656673
 SortingGroup:
   m_ObjectHideFlags: 0
