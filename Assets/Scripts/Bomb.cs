@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public int damages = 5;
-    public float knockbackSpeed = 6;
+    public GameObject attackPrefab = null;
     public float timeToExplode = 5;
 
     private float time = 0;
@@ -23,7 +22,10 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         Debug.Log("Booom !!");
+        if (attackPrefab == null)
+            return;
 
+        GameObject.Instantiate(attackPrefab, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

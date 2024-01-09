@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf1d0e801f737a4fa806542cd7487a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damages: 5
-  knockbackSpeed: 6
-  timeToExplode: 5
+  attackPrefab: {fileID: 2185964762067344080, guid: 8862e3d5aaa163242bd4d8a43709e02c,
+    type: 3}
+  timeToExplode: 1.5
 --- !u!212 &7725945197443063813
 SpriteRenderer:
   m_ObjectHideFlags: 0
