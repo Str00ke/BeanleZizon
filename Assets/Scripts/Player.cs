@@ -251,7 +251,7 @@ public class Player : MonoBehaviour {
     /// </summary>
 	private void UseBomb()
     {
-        if (_bombCount <= 0)
+        if (bombPrefab == null || _bombCount <= 0)
             return;
 
         //Instanciate a Bomb
