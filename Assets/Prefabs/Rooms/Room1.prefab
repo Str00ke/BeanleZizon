@@ -396,7 +396,7 @@ MonoBehaviour:
   <IsEndRoom>k__BackingField: 0
   <IsSecretRoom>k__BackingField: 0
   <Difficulty>k__BackingField: 0
-  <Element>k__BackingField: 0
+  <Element>k__BackingField: 1
   <Size>k__BackingField: {x: 1, y: 1}
   <Position_DoNotEdit>k__BackingField: {x: 0, y: 0}
 --- !u!114 &4632209732427001137
@@ -856,6 +856,36 @@ MonoBehaviour:
       showTileWithPrefab: 1
       showPrefabPreviewInTilePalette: 0
     obj: {fileID: 2205312756535306205}
+  - tilePos: 421
+    tilePrefabData:
+      prefab: {fileID: 6144991255345215292, guid: d0c3bea2c44ba4941928bc1f043d4265,
+        type: 3}
+      offset: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      offsetMode: 0
+      showTileWithPrefab: 0
+      showPrefabPreviewInTilePalette: 1
+    obj: {fileID: 0}
+  - tilePos: 363
+    tilePrefabData:
+      prefab: {fileID: 6144991255345215292, guid: d0c3bea2c44ba4941928bc1f043d4265,
+        type: 3}
+      offset: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      offsetMode: 0
+      showTileWithPrefab: 0
+      showPrefabPreviewInTilePalette: 1
+    obj: {fileID: 0}
+  - tilePos: 490
+    tilePrefabData:
+      prefab: {fileID: 6144991255345215292, guid: 242470f11a9686d48b7ab23d9a40e526,
+        type: 3}
+      offset: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      offsetMode: 0
+      showTileWithPrefab: 0
+      showPrefabPreviewInTilePalette: 1
+    obj: {fileID: 0}
 --- !u!68 &3302698745170717415
 EdgeCollider2D:
   m_ObjectHideFlags: 0
