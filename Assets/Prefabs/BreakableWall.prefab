@@ -223,6 +223,7 @@ MonoBehaviour:
   life: 5
   wallGo: {fileID: 2556312983783458711}
   destroyedWallGo: {fileID: 1544201153180023512}
+  colliderGo: {fileID: 6132968265157919698}
 --- !u!50 &7656001216659793358
 Rigidbody2D:
   serializedVersion: 4
