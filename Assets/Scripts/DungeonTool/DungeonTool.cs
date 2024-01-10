@@ -26,6 +26,12 @@ internal sealed class DungeonTool : MonoBehaviour
             var hearts = room.GetComponentsInChildren<HeartCollectible>();
             var doors = room.GetDoors();
 
+            foreach (var door in doors)
+            {
+                door.Initialize(room);
+                Debug.LogError(door.Orientation);
+            }
+
             var roomData = new RoomData
             {
                 Name = room.name,
