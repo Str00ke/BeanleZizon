@@ -98,8 +98,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3439707366071625227}
-  - component: {fileID: 1838912496259729275}
   - component: {fileID: 7906677734586369024}
+  - component: {fileID: 1838912496259729275}
   - component: {fileID: 3115939115062263134}
   m_Layer: 0
   m_Name: Room3
@@ -125,6 +125,25 @@ Transform:
   - {fileID: 6188400549392078226}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7906677734586369024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820465165552439272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsStartRoom>k__BackingField: 0
+  <IsEndRoom>k__BackingField: 0
+  <IsSecretRoom>k__BackingField: 0
+  <Difficulty>k__BackingField: 0
+  <Element>k__BackingField: 0
+  <Size>k__BackingField: {x: 1, y: 1}
+  <Position_DoNotEdit>k__BackingField: {x: 0, y: 1}
 --- !u!114 &1838912496259729275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,25 +167,6 @@ MonoBehaviour:
   m_savedTileDefaultTilemaps: []
   m_savedBrushIds: 
   m_savedBrushDefaultTilemaps: []
---- !u!114 &7906677734586369024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820465165552439272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsStartRoom>k__BackingField: 0
-  <IsEndRoom>k__BackingField: 0
-  <IsSecretRoom>k__BackingField: 0
-  <Difficulty>k__BackingField: 0
-  <Element>k__BackingField: todo
-  <Size>k__BackingField: {x: 1, y: 1}
-  <Position_DoNotEdit>k__BackingField: {x: 0, y: 1}
 --- !u!50 &3115939115062263134
 Rigidbody2D:
   serializedVersion: 4
