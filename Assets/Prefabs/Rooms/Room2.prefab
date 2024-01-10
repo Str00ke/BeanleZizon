@@ -1123,8 +1123,10 @@ MonoBehaviour:
   <IsStartRoom>k__BackingField: 0
   <IsEndRoom>k__BackingField: 0
   <IsSecretRoom>k__BackingField: 0
+  <Difficulty>k__BackingField: 0
+  <Element>k__BackingField: todo
   <Size>k__BackingField: {x: 1, y: 2}
-  <Position>k__BackingField: {x: 1, y: 0}
+  <Position_DoNotEdit>k__BackingField: {x: 1, y: 0}
 --- !u!50 &3816823355130275087
 Rigidbody2D:
   serializedVersion: 4
