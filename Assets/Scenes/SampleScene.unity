@@ -390,6 +390,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1164001877029012502, guid: 1b3c041700faf1248ae17aeffe2c297e,
         type: 3}
+      propertyPath: IsUndoEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164001877029012502, guid: 1b3c041700faf1248ae17aeffe2c297e,
+        type: 3}
       propertyPath: m_parentTilemapGroup
       value: 
       objectReference: {fileID: 881646639}
