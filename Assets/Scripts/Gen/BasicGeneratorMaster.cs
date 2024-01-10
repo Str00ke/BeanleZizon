@@ -1,25 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 public class BasicGeneratorMaster : MonoBehaviour
 {
-    enum Cardinals : ushort
-    {
-        NORTH = 0,
-        SOUTH = 1,
-        WEST = 2,
-        EAST = 3
-    };
-
     [SerializeField]
     Sprite _tmpRoomImg;
 
     [SerializeField] private Vector2Int _gridSize;
 
     [SerializeField] private int _mapWalkthroughMaxSize = 10;
-    private int _currMapWalkthroughSize = 0;
 
     private Dictionary<Vector2Int, BasicRoom> _rooms = new();
  
@@ -37,6 +29,7 @@ public class BasicGeneratorMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
         Generate();
     }
 
@@ -45,10 +38,9 @@ public class BasicGeneratorMaster : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R)) 
         {
-            _currMapWalkthroughSize = 0;
             _endRoomGen = false;
 
-            var arr = FindObjectsByType<BasicRoom>(FindObjectsSortMode.None);
+            var arr = FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None);
             var arr2 = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
             foreach (var obj in arr)
             {
@@ -106,12 +98,128 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void Generate()
     {
-        GenAtRoom(_startPos);
+        GenAtRoom(_startPos, (Cardinals)Random.Range(0, 4), true, 0, null);
+        GenDeviated();
     }
 
-    void GenAtRoom(Vector2Int pos)
+    List<Cardinals> GetNextRandCard(Cardinals currCardWay, Vector2Int pos)
     {
-        Debug.Log(pos);
+        List<Cardinals> nextRandCard = new();
+        switch (currCardWay)
+        {
+            //case Cardinals.NORTH | Cardinals.SOUTH:
+            //    nextRandCard.Add(Cardinals.EAST);
+            //    nextRandCard.Add(Cardinals.WEST);
+            //    break;
+
+            //case Cardinals.EAST | Cardinals.WEST:
+            //    nextRandCard.Add(Cardinals.NORTH);
+            //    nextRandCard.Add(Cardinals.SOUTH);
+            //    break;
+
+            case Cardinals.NORTH:
+                nextRandCard.Add(Cardinals.EAST);
+                nextRandCard.Add(Cardinals.WEST);
+                break;
+
+            case Cardinals.SOUTH:
+                nextRandCard.Add(Cardinals.EAST);
+                nextRandCard.Add(Cardinals.WEST);
+                break;
+
+            case Cardinals.EAST:
+                nextRandCard.Add(Cardinals.NORTH);
+                nextRandCard.Add(Cardinals.SOUTH);
+                break;
+
+            case Cardinals.WEST:
+                nextRandCard.Add(Cardinals.NORTH);
+                nextRandCard.Add(Cardinals.SOUTH);
+                break;
+
+        }
+
+        for (int next = nextRandCard.Count - 1; next >= 0; next--)
+        {
+            Cardinals c = nextRandCard[next];
+            if (_rooms.ContainsKey(pos + GetOffset(c)))
+            {
+                nextRandCard.Remove(c);
+            }
+        }
+        return nextRandCard;
+    }
+
+    void GenAtRoom(Vector2Int pos, Cardinals currCardWay, bool isMainPath, int currIndex, BasicRoom prevRoom)
+    {
+        BasicRoom _currRoom = new BasicRoom(pos);
+        if(prevRoom != null) prevRoom.NextRooms.Add(_currRoom);
+        _rooms.Add(pos, _currRoom);
+        GameObject tmp = new GameObject("testRoom");
+        tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+        SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
+        sr.sprite = _tmpRoomImg;
+        tmp.transform.position = new Vector3(pos.x, pos.y, 0);
+
+        bool[] possibilites = new bool[4];/*{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };*/
+
+        //Check if OOB
+        possibilites[(ushort)Cardinals.NORTH] = !((pos + GetOffset(Cardinals.NORTH)).x < 0);
+        possibilites[(ushort)Cardinals.SOUTH] = !((pos + GetOffset(Cardinals.SOUTH)).x > _gridSize.x);
+        possibilites[(ushort)Cardinals.EAST] = !((pos + GetOffset(Cardinals.EAST)).y < 0);
+        possibilites[(ushort)Cardinals.WEST] = !((pos + GetOffset(Cardinals.WEST)).y > _gridSize.y);
+
+
+        bool keepWay = Random.Range(0, 100) <= 50;
+
+        List<Cardinals> nextRandCard = new();
+        if (!keepWay)
+            nextRandCard = GetNextRandCard(currCardWay, pos);
+
+        //Cardinals nextWay = keepWay ? currCardWay : nextRandCard[Random.Range(0, nextRandCard.Count - 1)];
+        Cardinals nextWay;
+        if (keepWay)
+            nextWay = currCardWay;
+        else
+        {
+            nextWay = nextRandCard[Random.Range(0, nextRandCard.Count - 1)];
+        }
+
+
+        if (isMainPath)
+        {
+            if (currIndex == _mapWalkthroughMaxSize)
+            {
+                _endRoomGen = true;
+                return;
+            }
+            CreateCorridor(pos, nextWay, Color.green);
+            GenAtRoom(pos + GetOffset(nextWay), nextWay, isMainPath, currIndex + 1);
+            if (Random.Range(0, 100) <= 25)
+            {
+                List<Cardinals> newWays = GetNextRandCard(nextWay, pos);
+                Cardinals newWay = newWays[Random.Range(0, newWays.Count - 1)];
+                CreateCorridor(pos, newWay, Color.red);
+
+                GenAtRoom(pos + GetOffset(newWay), newWay, false, currIndex + 1);
+            }
+
+        }
+        else
+        {
+            if (currIndex == _mapWalkthroughMaxSize)
+            {
+                return;
+            }
+            CreateCorridor(pos, nextWay, Color.red);
+            GenAtRoom(pos + GetOffset(nextWay), nextWay, isMainPath, currIndex + 1);
+        }
+    }
+
+    void GenAtRoomTMP(Vector2Int pos, Cardinals currCardWay, bool isMainPath)
+    {
+        /*
+        //Debug.Log(pos);
         _rooms.Add(pos, new BasicRoom());
         GameObject tmp = new GameObject("testRoom");
         tmp.AddComponent<BasicRoom>();
@@ -127,10 +235,7 @@ public class BasicGeneratorMaster : MonoBehaviour
             return;
         }
 
-        bool[] possibilites = new bool[4];/*{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };*/
-
-        bool done = Random.Range(0, 100) <= 10;
-        if (done) return;
+        bool[] possibilites = new bool[4];//{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };
 
         //Check if OOB
         possibilites[(ushort)Cardinals.NORTH] = !((pos + GetOffset(Cardinals.NORTH)).x < 0);
@@ -164,7 +269,22 @@ public class BasicGeneratorMaster : MonoBehaviour
                 {
                     //l> else, rand create
                     bool create = Random.Range(0, 100) <= 50;
-                    if (create)
+                    bool keepWay = Random.Range(0, 100) <= 50;
+                    Cardinals nextWay = keepWay ? currCardWay : (Cardinals)Random.Range(0, 4); //Can get same way though, might fix
+                    Debug.Log(nextWay);
+                    if (isMainPath)
+                    {
+                        GameObject lrGo = new GameObject("Connection");
+                        LineRenderer lr = lrGo.AddComponent<LineRenderer>();
+                        lr.positionCount = 2;
+                        lr.SetPosition(0, new Vector3(pos.x, pos.y, 0));
+                        Vector2Int nextVec = pos + GetOffset(nextWay);
+                        Vector3 nextPos = new Vector3(nextVec.x, nextVec.y, 0);
+                        lr.SetPosition(1, nextPos);
+                        lr.widthMultiplier = 0.1f;
+                        GenAtRoom(pos + GetOffset(nextWay), nextWay, isMainPath);
+                    }
+                    else if (create)
                     {
                         GameObject lrGo = new GameObject("Connection");
                         LineRenderer lr = lrGo.AddComponent<LineRenderer>();
@@ -174,11 +294,32 @@ public class BasicGeneratorMaster : MonoBehaviour
                         Vector3 tmpP = new Vector3(tmpVec.x, tmpVec.y, 0);
                         lr.SetPosition(1, tmpP);
                         lr.widthMultiplier = 0.1f;
-                        GenAtRoom(pos + GetOffset((Cardinals)i));
+                        GenAtRoom(pos + GetOffset((Cardinals)i), nextWay, isMainPath);
                     }
                 }
             }
         }
+        */
     }
 
+
+    void GenDeviated()
+    {
+
+    }
+
+    void CreateCorridor(Vector2Int pos, Cardinals nextWay, Color color) //For now, just create line renderer
+    {
+        GameObject lrGo = new GameObject("Connection");
+        LineRenderer lr = lrGo.AddComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+        lr.startColor = color;
+        lr.endColor = color;
+        lr.positionCount = 2;
+        lr.SetPosition(0, new Vector3(pos.x, pos.y, 0));
+        Vector2Int nextVec = pos + GetOffset(nextWay);
+        Vector3 nextPos = new Vector3(nextVec.x, nextVec.y, 0);
+        lr.SetPosition(1, nextPos);
+        lr.widthMultiplier = 0.1f;
+    }
 }
