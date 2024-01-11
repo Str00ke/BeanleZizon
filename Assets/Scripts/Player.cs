@@ -66,6 +66,7 @@ public class Player : MonoBehaviour {
     public GameObject attackSpawnPoint = null;
     public float attackCooldown = 0.3f;
     public ORIENTATION orientation = ORIENTATION.FREE;
+    public Element element = Element.None;
 
     private float lastAttackTime = float.MinValue;
 
