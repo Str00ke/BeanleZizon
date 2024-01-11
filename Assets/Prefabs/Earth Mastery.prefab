@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7725945197443063866}
-  - component: {fileID: 7725945197443063867}
   - component: {fileID: 7725945197443063813}
   - component: {fileID: 1767114715}
   - component: {fileID: 1767114716}
+  - component: {fileID: 6248747762597343640}
   m_Layer: 0
   m_Name: Earth Mastery
   m_TagString: Untagged
@@ -35,18 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7725945197443063867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725945197443063864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d6a7aa6546ec5246a916667ab331a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &7725945197443063813
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,3 +159,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6214008, y: 1.977483}
   m_EdgeRadius: 0
+--- !u!114 &6248747762597343640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725945197443063864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4010d0042e6d544aa5c31ab2c111ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 3
