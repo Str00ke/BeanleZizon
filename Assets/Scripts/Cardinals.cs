@@ -7,5 +7,7 @@ public enum Cardinals : ushort
     NORTH = 0,
     SOUTH = 1,
     WEST = 2,
-    EAST = 3
+    EAST = 3,
+
+    COUNT = 4
 };
