@@ -264,6 +264,15 @@ MonoBehaviour:
   _mapWalkthroughMaxSize: 10
   _connectionChanceBeforeEnd: 200
   _connectionChanceAfterEnd: 200
+  _renderDebug: 0
+  _earth1x1Rooms:
+  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  - {fileID: 2786395878849647928, guid: 35017b12e2fbb3644b2c6ce1f9144f68, type: 3}
+  - {fileID: 2786395878849647928, guid: e32db682f222fb242aaf48a9ae7057da, type: 3}
+  - {fileID: 2786395878849647928, guid: 362bf3212e3abab459c135d4db911d7c, type: 3}
+  - {fileID: 2786395878849647928, guid: 2659c6c8df211b245b6ad9bebbb25f1f, type: 3}
+  - {fileID: 2786395878849647928, guid: 672196941a83952459753864210b7a76, type: 3}
+  - {fileID: 2786395878849647928, guid: d25a5d6c5d8b0ac4f84e3f5230811352, type: 3}
 --- !u!1 &1543340477
 GameObject:
   m_ObjectHideFlags: 0
