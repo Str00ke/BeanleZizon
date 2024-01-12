@@ -193,6 +193,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1318996922, guid: a0426054a75cf414e8d43607d1129b03,
         type: 3}
+    - target: {fileID: 1236497368894297515, guid: 5f2601cc89bdd9545968470c924012dd,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1426011269217010653, guid: 5f2601cc89bdd9545968470c924012dd,
         type: 3}
       propertyPath: m_parentTilemapGroup
@@ -204,12 +209,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1318996922, guid: a0426054a75cf414e8d43607d1129b03,
         type: 3}
+    - target: {fileID: 1764071506939389722, guid: 5f2601cc89bdd9545968470c924012dd,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2459996714768641828, guid: 5f2601cc89bdd9545968470c924012dd,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1318996922, guid: a0426054a75cf414e8d43607d1129b03,
         type: 3}
+    - target: {fileID: 2459996714768641828, guid: 5f2601cc89bdd9545968470c924012dd,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3010355655479397556, guid: 5f2601cc89bdd9545968470c924012dd,
         type: 3}
       propertyPath: m_Mesh
@@ -221,6 +236,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1318996922, guid: a0426054a75cf414e8d43607d1129b03,
         type: 3}
+    - target: {fileID: 3130141947332484501, guid: 5f2601cc89bdd9545968470c924012dd,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3870148772091206802, guid: 5f2601cc89bdd9545968470c924012dd,
         type: 3}
       propertyPath: m_Sprite
