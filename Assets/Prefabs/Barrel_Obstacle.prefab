@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7725945197443063813}
   - component: {fileID: 1767114715}
   - component: {fileID: 1767114716}
+  - component: {fileID: 8415214612363138839}
   m_Layer: 0
   m_Name: Barrel_Obstacle
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_GameObject: {fileID: 7725945197443063864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.185244, y: 3.4851635, z: -2.375623}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,3 +159,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9111547, y: 4.7318573}
   m_EdgeRadius: 0
+--- !u!114 &8415214612363138839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725945197443063864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3253900bdb96248addb9ca2eeadf82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  timeBetweenExplosion: 4
+  timeBeforeExplosion: 0.2
+  attackPrefab: {fileID: 2185964762067344080, guid: 8862e3d5aaa163242bd4d8a43709e02c,
+    type: 3}
