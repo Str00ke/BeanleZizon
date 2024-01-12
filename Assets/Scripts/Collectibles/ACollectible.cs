@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Abstract class for any collectible. A collectible behaviour must be associated to a hitbox in "trigger" mode.
-/// When a collectible is collected, it triggers OnCollect then destroys itself.
+/// Abstract class for any collectible. A collectible behaviour must be associated to a hitbox in
+/// "trigger" mode. When a collectible is collected, it triggers OnCollect then destroys itself.
 /// </summary>
-public abstract class ACollectible : MonoBehaviour {
-
+public abstract class ACollectible : MonoBehaviour
+{
     /// <summary>
     /// Checks if collectible is correctly associated with a trigger hitbox
     /// </summary>

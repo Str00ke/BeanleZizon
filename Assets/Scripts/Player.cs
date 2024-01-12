@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Player component. Manages inputs, character states and associated game flow.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour
+{
     public static Player Instance = null;
 
     [System.Serializable]
@@ -19,7 +18,8 @@ public class Player : MonoBehaviour {
         public float friction = 12.0f;
     }
 
-    // Possible orientation for player aiming : 4 direction, 8 direction (for keyboards or D-pads) or free direction (for analogic joysticks)
+    // Possible orientation for player aiming : 4 direction, 8 direction (for keyboards or D-pads)
+    // or free direction (for analogic joysticks)
     public enum ORIENTATION
     {
         FREE,
@@ -27,7 +27,8 @@ public class Player : MonoBehaviour {
         DPAD_4
     }
 
-    // Character can only be at one state at a time. For example, he can't attack and be stunned at the same time.
+    // Character can only be at one state at a time. For example, he can't attack and be stunned at
+    // the same time.
     public enum STATE
     {
         IDLE = 0,
@@ -49,7 +50,6 @@ public class Player : MonoBehaviour {
     private float _lastHitTime = float.MinValue;
     private List<SpriteRenderer> _spriteRenderers = new List<SpriteRenderer>();
     private Coroutine _blinkCoroutine = null;
-
 
     // Movement attributes
     [Header("Movement")]
@@ -80,19 +80,23 @@ public class Player : MonoBehaviour {
 
     // Collectible attributes
     private int _keyCount;
-    public int KeyCount { get { return _keyCount; } set { _keyCount = value; } }
-    
+    public int KeyCount
+    { get { return _keyCount; } set { _keyCount = value; } }
+
     private int _bombCount;
-    public int BombCount { get { return _bombCount; } set { _bombCount = value; } }
+    public int BombCount
+    { get { return _bombCount; } set { _bombCount = value; } }
 
     [Header("Input")]
     public GameObject bombPrefab = null;
 
     // Dungeon position
     private Room _room = null;
-	public Room Room { get { return _room; } }
+    public Room Room
+    { get { return _room; } }
 
-	private void Awake () {
+    private void Awake()
+    {
         Instance = this;
         _body = GetComponent<Rigidbody2D>();
         GetComponentsInChildren<SpriteRenderer>(true, _spriteRenderers);
@@ -103,7 +107,8 @@ public class Player : MonoBehaviour {
         SetState(STATE.IDLE);
     }
 
-    private void Update () {
+    private void Update()
+    {
         UpdateState();
         UpdateInputs();
         UpdateRoom();
@@ -112,22 +117,24 @@ public class Player : MonoBehaviour {
     private void FixedUpdate()
     {
         FixedUpdateMovement();
-	}
+    }
 
     /// <summary>
-    /// Updates any room related behaviours. By default, move from one room to another when reaching 
+    /// Updates any room related behaviours. By default, move from one room to another when reaching
     /// </summary>
 	private void UpdateRoom()
-	{
+    {
         Bounds roomBounds = _room.GetWorldBounds();
         Room nextRoom = null;
-        if(transform.position.x > roomBounds.max.x)
+        if (transform.position.x > roomBounds.max.x)
         {
             nextRoom = _room.GetAdjacentRoom(Utils.ORIENTATION.EAST, transform.position);
-        } else if(transform.position.x < roomBounds.min.x)
+        }
+        else if (transform.position.x < roomBounds.min.x)
         {
             nextRoom = _room.GetAdjacentRoom(Utils.ORIENTATION.WEST, transform.position);
-        } else if (transform.position.y > roomBounds.max.y)
+        }
+        else if (transform.position.y > roomBounds.max.y)
         {
             nextRoom = _room.GetAdjacentRoom(Utils.ORIENTATION.NORTH, transform.position);
         }
@@ -136,16 +143,16 @@ public class Player : MonoBehaviour {
             nextRoom = _room.GetAdjacentRoom(Utils.ORIENTATION.SOUTH, transform.position);
         }
 
-		if(nextRoom != null)
-		{
+        if (nextRoom != null)
+        {
             EnterRoom(nextRoom);
-		}
-	}
+        }
+    }
 
-	/// <summary>
+    /// <summary>
     /// Updates inputs
     /// </summary>
-	private void UpdateInputs()
+    private void UpdateInputs()
     {
         if (CanMove())
         {
@@ -153,16 +160,22 @@ public class Player : MonoBehaviour {
             if (_direction.magnitude < controllerDeadZone)
             {
                 _direction = Vector2.zero;
-            } else {
+            }
+            else
+            {
                 _direction.Normalize();
             }
-            if(Input.GetButtonDown("Fire1")) {
+            if (Input.GetButtonDown("Fire1"))
+            {
                 Attack();
             }
-            if(Input.GetButtonDown("Fire2")) {
+            if (Input.GetButtonDown("Fire2"))
+            {
                 UseBomb();
             }
-        } else {
+        }
+        else
+        {
             _direction = Vector2.zero;
         }
     }
@@ -172,19 +185,20 @@ public class Player : MonoBehaviour {
     /// </summary>
     private void UpdateState()
     {
-        switch(_state)
+        switch (_state)
         {
-			case STATE.ATTACKING:
-				SpawnAttackPrefab();
-				SetState(STATE.IDLE);
-				break;
-			default: break;
+            case STATE.ATTACKING:
+                SpawnAttackPrefab();
+                SetState(STATE.IDLE);
+                break;
+            default: break;
         }
     }
 
     /// <summary>
-    /// Changes current state to a new given state. Instructions related to exiting and entering a state should be coded in the two "switch(_state){...}" of this method.
-    /// </summary>    
+    /// Changes current state to a new given state. Instructions related to exiting and entering a
+    /// state should be coded in the two "switch(_state){...}" of this method.
+    /// </summary>
     private void SetState(STATE state)
     {
         // Exiting previous state
@@ -198,7 +212,7 @@ public class Player : MonoBehaviour {
         switch (_state)
         {
             case STATE.STUNNED: _currentMovement = stunnedMovement; break;
-            case STATE.DEAD: 
+            case STATE.DEAD:
                 EndBlink();
                 SetColor(deadColor);
                 break;
@@ -212,32 +226,37 @@ public class Player : MonoBehaviour {
         }
     }
 
-
     /// <summary>
     /// Updates velocity and frictions
     /// </summary>
-    void FixedUpdateMovement()
+    private void FixedUpdateMovement()
     {
         if (_direction.magnitude > Mathf.Epsilon) // magnitude > 0
         {
-            // If direction magnitude > 0, Accelerate in direction, then clamp velocity to max speed. Do not apply friction if character is moving toward a direction.
+            // If direction magnitude > 0, Accelerate in direction, then clamp velocity to max
+            // speed. Do not apply friction if character is moving toward a direction.
             _body.velocity += _direction * _currentMovement.acceleration * Time.fixedDeltaTime;
             _body.velocity = Vector2.ClampMagnitude(_body.velocity, _currentMovement.speedMax);
             transform.eulerAngles = new Vector3(0.0f, 0.0f, ComputeOrientationAngle(_direction));
-        } else {
+        }
+        else
+        {
             // If direction magnitude == 0, Apply friction
             float frictionMagnitude = _currentMovement.friction * Time.fixedDeltaTime;
             if (_body.velocity.magnitude > frictionMagnitude)
             {
                 _body.velocity -= _body.velocity.normalized * frictionMagnitude;
-            } else {
+            }
+            else
+            {
                 _body.velocity = Vector2.zero;
             }
         }
     }
 
     /// <summary>
-	/// Sets player in attack state. Attack prefab will be spawned when calling SpawnAttackPrefab method a little later.
+    /// Sets player in attack state. Attack prefab will be spawned when calling SpawnAttackPrefab
+    /// method a little later.
     /// </summary>
 	private void Attack()
     {
@@ -246,11 +265,11 @@ public class Player : MonoBehaviour {
         lastAttackTime = Time.time;
         SetState(STATE.ATTACKING);
     }
-    
+
     /// <summary>
-	/// Instanciate Bomb prefab if player has at least 1 bomb in BombCount.
+    /// Instanciate Bomb prefab if player has at least 1 bomb in BombCount.
     /// </summary>
-	private void UseBomb()
+    private void UseBomb()
     {
         if (bombPrefab == null || _bombCount <= 0)
             return;
@@ -268,7 +287,8 @@ public class Player : MonoBehaviour {
         if (attackPrefab == null)
             return;
 
-        // transform used for spawn is attackSpawnPoint.transform if attackSpawnPoint is not null. Else it's transform.
+        // transform used for spawn is attackSpawnPoint.transform if attackSpawnPoint is not null.
+        // Else it's transform.
         Transform spawnTransform = attackSpawnPoint ? attackSpawnPoint.transform : transform;
         GameObject.Instantiate(attackPrefab, spawnTransform.position, spawnTransform.rotation);
     }
@@ -286,7 +306,9 @@ public class Player : MonoBehaviour {
         if (life <= 0)
         {
             SetState(STATE.DEAD);
-        } else {
+        }
+        else
+        {
             if (attack != null && attack.knockbackDuration > 0.0f)
             {
                 StartCoroutine(ApplyKnockBackCoroutine(attack.knockbackDuration, attack.transform.right * attack.knockbackSpeed));
@@ -297,7 +319,9 @@ public class Player : MonoBehaviour {
     }
 
     /// <summary>
-    /// Puts player in STUNNED state and sets a velocity to knockback player. It resume to IDLE state after a fixed duration. STUNNED state has his own movement parameters that allow to redefine frictions when character is knocked.
+    /// Puts player in STUNNED state and sets a velocity to knockback player. It resume to IDLE
+    /// state after a fixed duration. STUNNED state has his own movement parameters that allow to
+    /// redefine frictions when character is knocked.
     /// </summary>
     private IEnumerator ApplyKnockBackCoroutine(float duration, Vector3 velocity)
     {
@@ -308,16 +332,17 @@ public class Player : MonoBehaviour {
     }
 
     /// <summary>
-    /// Makes all sprite renderers in the player hierarchy blink from enabled to disabled with a fixed period over a fixed time.  
+    /// Makes all sprite renderers in the player hierarchy blink from enabled to disabled with a
+    /// fixed period over a fixed time.
     /// </summary>
     private IEnumerator BlinkCoroutine()
     {
         float invincibilityTimer = 0;
-        while(invincibilityTimer < invincibilityDuration)
+        while (invincibilityTimer < invincibilityDuration)
         {
             invincibilityTimer += Time.deltaTime;
             bool isVisible = ((int)(invincibilityTimer / invincibilityBlinkPeriod)) % 2 == 1;
-            foreach(SpriteRenderer spriteRenderer in _spriteRenderers)
+            foreach (SpriteRenderer spriteRenderer in _spriteRenderers)
             {
                 spriteRenderer.enabled = isVisible;
             }
@@ -339,7 +364,6 @@ public class Player : MonoBehaviour {
         }
         StopCoroutine(_blinkCoroutine);
         _blinkCoroutine = null;
-
     }
 
     /// <summary>
@@ -359,7 +383,7 @@ public class Player : MonoBehaviour {
     private float ComputeOrientationAngle(Vector2 direction)
     {
         float angle = Vector2.SignedAngle(Vector2.right, direction);
-        switch(orientation)
+        switch (orientation)
         {
             case ORIENTATION.DPAD_8: return Utils.DiscreteAngle(angle, 45); // Only 0 45 90 135 180 225 270 315
             case ORIENTATION.DPAD_4: return Utils.DiscreteAngle(angle, 90); // Only 0 90 180 270
@@ -379,18 +403,19 @@ public class Player : MonoBehaviour {
     /// Called to enter a room
     /// </summary>
 	public void EnterRoom(Room room)
-	{
+    {
         Room previous = _room;
         _room = room;
         room.OnEnterRoom(previous);
     }
 
     /// <summary>
-    /// Checks if player gets hit by any attack hitbox. Applies attack data (damages, knockback, ...) to player.
+    /// Checks if player gets hit by any attack hitbox. Applies attack data (damages, knockback,
+    /// ...) to player.
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if( ((1 << collision.gameObject.layer) & hitLayers) != 0 )
+        if (((1 << collision.gameObject.layer) & hitLayers) != 0)
         {
             // Collided with hitbox
             Attack attack = collision.gameObject.GetComponent<Attack>();
