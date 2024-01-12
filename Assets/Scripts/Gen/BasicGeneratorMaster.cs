@@ -23,6 +23,11 @@ public class BasicGeneratorMaster : MonoBehaviour
     [SerializeField] private int _connectionChanceBeforeEnd;
     [SerializeField] private int _connectionChanceAfterEnd;
 
+    [SerializeField] bool _renderDebug = false;
+
+    //TMP
+    [SerializeField] private List<GameObject> _earth1x1Rooms = new();
+
     public BasicRoom room(Vector2Int value)
     {
         return _rooms[value];
@@ -32,8 +37,8 @@ public class BasicGeneratorMaster : MonoBehaviour
     void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
-        //Generate();
-        UnitTests();
+        Generate();
+        //UnitTests();
     }
 
     // Update is called once per frame
@@ -42,6 +47,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R)) 
         {
             Reset();
+            Generate();
         }
     }
 
@@ -63,6 +69,7 @@ public class BasicGeneratorMaster : MonoBehaviour
 
         var arr = FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None);
         var arr2 = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
+        var arr3 = FindObjectsByType<Room>(FindObjectsSortMode.None);
         foreach (var obj in arr)
         {
             Destroy(obj.gameObject);
@@ -71,9 +78,13 @@ public class BasicGeneratorMaster : MonoBehaviour
         {
             Destroy(obj.gameObject);
         }
+        foreach (var obj in arr3)
+        {
+            Destroy(obj.gameObject);
+        }
         _rooms.Clear();
         _sideRooms.Clear();
-        //Generate();
+        
     }
 
     Vector2Int GetOffset(Cardinals card)
@@ -120,7 +131,7 @@ public class BasicGeneratorMaster : MonoBehaviour
     void Generate()
     {
         GenAtRoom(_startPos, (Cardinals)Random.Range(0, (int)Cardinals.COUNT), true, 0, null);
-        GenDeviated(_startPos, true);
+        //GenDeviated(_startPos, true);
     }
 
     List<Cardinals> GetNextRandCard(Cardinals currCardWay, Vector2Int pos)
@@ -173,14 +184,18 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void GenAtRoom(Vector2Int pos, Cardinals currCardWay, bool isMainPath, int currIndex, BasicRoom prevRoom)
     {
-        BasicRoom _currRoom = new BasicRoom(pos);
+        BasicRoom _currRoom = new BasicRoom(pos, _earth1x1Rooms[Random.Range(0, _earth1x1Rooms.Count - 1)], currCardWay);
         if(prevRoom != null) prevRoom.NextRooms.Add(_currRoom);
         _rooms.Add(pos, _currRoom);
-        GameObject tmp = new GameObject("testRoom");
-        tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-        SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
-        sr.sprite = _tmpRoomImg;
-        tmp.transform.position = new Vector3(pos.x, pos.y, 0);
+        if(_renderDebug)
+        {
+            GameObject tmp = new GameObject("testRoom");
+            tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+            SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
+            sr.sprite = _tmpRoomImg;
+            tmp.transform.position = new Vector3(pos.x, pos.y, 0);
+        }
+        
 
         bool[] possibilites = new bool[(int)Cardinals.COUNT];/*{ Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST };*/
 
@@ -329,14 +344,18 @@ public class BasicGeneratorMaster : MonoBehaviour
         }
         Cardinals way = possibilities[Random.Range(0, possibilities.Count)];
         Vector2Int newPos = parentRoomPos + GetOffset(way);
-        BasicRoom _currRoom = new BasicRoom(newPos);
+        BasicRoom _currRoom = new BasicRoom(newPos, _earth1x1Rooms[Random.Range(0, _earth1x1Rooms.Count - 1)], way);
         if (_parentRoom != null) _parentRoom.NextRooms.Add(_currRoom);
         _sideRooms.Add(newPos, _currRoom);
-        GameObject tmp = new GameObject("testRoom");
-        tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-        SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
-        sr.sprite = _tmpRoomImg;
-        tmp.transform.position = new Vector3(newPos.x, newPos.y, 0);
+        if(_renderDebug)
+        {
+            GameObject tmp = new GameObject("testRoom");
+            tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+            SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
+            sr.sprite = _tmpRoomImg;
+            tmp.transform.position = new Vector3(newPos.x, newPos.y, 0);
+        }
+        
 
         CreateCorridor(parentRoomPos, way, Color.red);
 
@@ -349,6 +368,7 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void CreateCorridor(Vector2Int pos, Cardinals nextWay, Color color) //For now, just create line renderer
     {
+        if (!_renderDebug) return;
         GameObject lrGo = new GameObject("Connection");
         LineRenderer lr = lrGo.AddComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
