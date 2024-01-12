@@ -28,8 +28,6 @@ public class ExplosiveBarrel : MonoBehaviour
             timer = 0f;
             canExpload = true;
         }
-
-        Debug.Log( "Timer: " + timer + ", activated: " + activated + ", canExpload: " + canExpload);
     }
 
     private void Explode()
