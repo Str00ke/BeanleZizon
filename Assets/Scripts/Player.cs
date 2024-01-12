@@ -63,12 +63,16 @@ public class Player : MonoBehaviour
     // Attack attributes
     [Header("Attack")]
     public GameObject attackPrefab = null;
+    public GameObject fireAttackPrefab = null;
     public GameObject attackSpawnPoint = null;
     public float attackCooldown = 0.3f;
     public ORIENTATION orientation = ORIENTATION.FREE;
     public Element element = Element.None;
 
     private float lastAttackTime = float.MinValue;
+
+    private GameObject _flameThrower;
+    public Transform _muzzle = null;
 
     // Input attributes
     [Header("Input")]
@@ -99,7 +103,10 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         _body = GetComponent<Rigidbody2D>();
-        GetComponentsInChildren<SpriteRenderer>(true, _spriteRenderers);
+        GetComponentsInChildren(true, _spriteRenderers);
+
+        _flameThrower = Instantiate(original: fireAttackPrefab, parent: _muzzle);
+        _flameThrower.SetActive(false);
     }
 
     private void Start()
@@ -122,7 +129,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Updates any room related behaviours. By default, move from one room to another when reaching
     /// </summary>
-	private void UpdateRoom()
+    private void UpdateRoom()
     {
         Bounds roomBounds = _room.GetWorldBounds();
         Room nextRoom = null;
@@ -173,6 +180,7 @@ public class Player : MonoBehaviour
             {
                 UseBomb();
             }
+            _flameThrower.SetActive(element == Element.Fire && Input.GetButton("Fire1"));
         }
         else
         {
@@ -258,7 +266,7 @@ public class Player : MonoBehaviour
     /// Sets player in attack state. Attack prefab will be spawned when calling SpawnAttackPrefab
     /// method a little later.
     /// </summary>
-	private void Attack()
+    private void Attack()
     {
         if (Time.time - lastAttackTime < attackCooldown)
             return;
@@ -284,13 +292,18 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SpawnAttackPrefab()
     {
-        if (attackPrefab == null)
-            return;
+        var prefab = element switch
+        {
+            Element.Fire => null,
+            Element.Water => null,
+            Element.Earth => null,
+            Element.None or _ => attackPrefab,
+        };
 
-        // transform used for spawn is attackSpawnPoint.transform if attackSpawnPoint is not null.
-        // Else it's transform.
-        Transform spawnTransform = attackSpawnPoint ? attackSpawnPoint.transform : transform;
-        GameObject.Instantiate(attackPrefab, spawnTransform.position, spawnTransform.rotation);
+        if (prefab == null) return;
+
+        var spawn = attackSpawnPoint ? attackSpawnPoint.transform : transform;
+        _ = Instantiate(original: prefab, position: spawn.position, rotation: spawn.rotation);
     }
 
     /// <summary>
@@ -402,7 +415,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Called to enter a room
     /// </summary>
-	public void EnterRoom(Room room)
+    public void EnterRoom(Room room)
     {
         Room previous = _room;
         _room = room;
