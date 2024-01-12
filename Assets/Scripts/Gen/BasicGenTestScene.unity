@@ -264,15 +264,54 @@ MonoBehaviour:
   _mapWalkthroughMaxSize: 10
   _connectionChanceBeforeEnd: 200
   _connectionChanceAfterEnd: 200
-  _renderDebug: 0
-  _earth1x1Rooms:
-  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  _renderDebug: 1
+  _renderRooms: 1
+  _minSidePathRooms: 1
+  _maxSidePathRooms: 5
+  _minSidePathNbr: 3
+  _maxSidePathNbr: 5
+  _entryRoom: {fileID: 2786395878849647928, guid: 2d0d7a0eaee99e7479d78c419651dcb4,
+    type: 3}
+  _doorUp:
+  - {fileID: 2786395878849647928, guid: defee991c15974c4d86374c9b0a03fb3, type: 3}
   - {fileID: 2786395878849647928, guid: 35017b12e2fbb3644b2c6ce1f9144f68, type: 3}
   - {fileID: 2786395878849647928, guid: e32db682f222fb242aaf48a9ae7057da, type: 3}
+  - {fileID: 2786395878849647928, guid: 2659c6c8df211b245b6ad9bebbb25f1f, type: 3}
   - {fileID: 2786395878849647928, guid: 362bf3212e3abab459c135d4db911d7c, type: 3}
+  - {fileID: 2786395878849647928, guid: 4103bc8730658614c8159549967a818d, type: 3}
+  - {fileID: 9004624771089158077, guid: f35b25c68bcaa32409c57b997b73a62e, type: 3}
+  - {fileID: 9004624771089158077, guid: ef7c42ed8d0b55b409169bc01c82bdd8, type: 3}
+  - {fileID: 2786395878849647928, guid: 51c0949b80110254aab6d05742b2ea37, type: 3}
+  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  _doorDown:
+  - {fileID: 2786395878849647928, guid: defee991c15974c4d86374c9b0a03fb3, type: 3}
+  - {fileID: 2786395878849647928, guid: 35017b12e2fbb3644b2c6ce1f9144f68, type: 3}
+  - {fileID: 2786395878849647928, guid: e32db682f222fb242aaf48a9ae7057da, type: 3}
   - {fileID: 2786395878849647928, guid: 2659c6c8df211b245b6ad9bebbb25f1f, type: 3}
   - {fileID: 2786395878849647928, guid: 672196941a83952459753864210b7a76, type: 3}
   - {fileID: 2786395878849647928, guid: d25a5d6c5d8b0ac4f84e3f5230811352, type: 3}
+  - {fileID: 9004624771089158077, guid: f35b25c68bcaa32409c57b997b73a62e, type: 3}
+  - {fileID: 9004624771089158077, guid: ef7c42ed8d0b55b409169bc01c82bdd8, type: 3}
+  - {fileID: 2786395878849647928, guid: 51c0949b80110254aab6d05742b2ea37, type: 3}
+  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  _doorLeft:
+  - {fileID: 2786395878849647928, guid: defee991c15974c4d86374c9b0a03fb3, type: 3}
+  - {fileID: 2786395878849647928, guid: 35017b12e2fbb3644b2c6ce1f9144f68, type: 3}
+  - {fileID: 2786395878849647928, guid: e32db682f222fb242aaf48a9ae7057da, type: 3}
+  - {fileID: 2786395878849647928, guid: 2659c6c8df211b245b6ad9bebbb25f1f, type: 3}
+  - {fileID: 2786395878849647928, guid: d25a5d6c5d8b0ac4f84e3f5230811352, type: 3}
+  - {fileID: 2786395878849647928, guid: 4103bc8730658614c8159549967a818d, type: 3}
+  - {fileID: 2786395878849647928, guid: 43d83398f083d6b4d84cb871e93e32e2, type: 3}
+  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  _doorRight:
+  - {fileID: 2786395878849647928, guid: defee991c15974c4d86374c9b0a03fb3, type: 3}
+  - {fileID: 2786395878849647928, guid: 35017b12e2fbb3644b2c6ce1f9144f68, type: 3}
+  - {fileID: 2786395878849647928, guid: e32db682f222fb242aaf48a9ae7057da, type: 3}
+  - {fileID: 2786395878849647928, guid: 2659c6c8df211b245b6ad9bebbb25f1f, type: 3}
+  - {fileID: 2786395878849647928, guid: 43d83398f083d6b4d84cb871e93e32e2, type: 3}
+  - {fileID: 2786395878849647928, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  - {fileID: 2786395878849647928, guid: 672196941a83952459753864210b7a76, type: 3}
+  - {fileID: 2786395878849647928, guid: 362bf3212e3abab459c135d4db911d7c, type: 3}
 --- !u!1 &1543340477
 GameObject:
   m_ObjectHideFlags: 0

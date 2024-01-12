@@ -16,6 +16,7 @@ public class Room : MonoBehaviour
     [field: SerializeField] public Element Element { get; private set; }
     [field: Space]
     [field: SerializeField] public Vector2Int Size { get; private set; } = Vector2Int.one;
+    [field: SerializeField] public Vector2Int TotalTiledSize { get; private set; } = Vector2Int.one;
     [field: Space]
     [field: SerializeField] public Vector2Int Position_DoNotEdit { get; private set; } = Vector2Int.zero;
 
