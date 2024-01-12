@@ -24,7 +24,12 @@ internal sealed class DungeonTool : MonoBehaviour
 
             var keys = room.GetComponentsInChildren<KeyCollectible>();
             var hearts = room.GetComponentsInChildren<HeartCollectible>();
-            var doors = room.GetDoors();
+            var doors = room.GetComponentsInChildren<Door>();
+
+            foreach (var door in doors)
+            {
+                door.Initialize(room);
+            }
 
             var roomData = new RoomData
             {
@@ -32,7 +37,7 @@ internal sealed class DungeonTool : MonoBehaviour
                 Prefab = room.gameObject,
                 Keys = keys.ToList(),
                 Hearts = hearts.ToList(),
-                Doors = doors
+                Doors = doors.ToList(),
             };
 
             Rooms.Add(roomData);

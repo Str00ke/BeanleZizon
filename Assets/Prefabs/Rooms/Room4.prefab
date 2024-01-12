@@ -181,8 +181,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1667075545654297639}
-  - component: {fileID: 3207279181926465553}
   - component: {fileID: 5492188204159618958}
+  - component: {fileID: 3207279181926465553}
   - component: {fileID: 2046720661762492684}
   m_Layer: 0
   m_Name: Room4
@@ -208,6 +208,25 @@ Transform:
   - {fileID: 617582682308722777}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5492188204159618958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2786395878849647928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsStartRoom>k__BackingField: 0
+  <IsEndRoom>k__BackingField: 0
+  <IsSecretRoom>k__BackingField: 0
+  <Difficulty>k__BackingField: 0
+  <Element>k__BackingField: 0
+  <Size>k__BackingField: {x: 1, y: 1}
+  <Position_DoNotEdit>k__BackingField: {x: 0, y: 0}
 --- !u!114 &3207279181926465553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +242,7 @@ MonoBehaviour:
   m_tilemaps:
   - {fileID: 1164001877029012502}
   - {fileID: 4495100732910442087}
-  m_selectedIndex: 0
+  m_selectedIndex: 1
   m_unselectedColorMultiplier: 1
   m_defaultTilemapWindowVisible: 0
   m_displayTilemapRList: 1
@@ -231,21 +250,6 @@ MonoBehaviour:
   m_savedTileDefaultTilemaps: []
   m_savedBrushIds: 
   m_savedBrushDefaultTilemaps: []
---- !u!114 &5492188204159618958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2786395878849647928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isStartRoom: 0
-  position: {x: 0, y: 0}
-  size: {x: 1, y: 1}
 --- !u!50 &2046720661762492684
 Rigidbody2D:
   serializedVersion: 4
@@ -680,6 +684,16 @@ MonoBehaviour:
       showTileWithPrefab: 0
       showPrefabPreviewInTilePalette: 1
     obj: {fileID: 5510963593937284099}
+  - tilePos: 187
+    tilePrefabData:
+      prefab: {fileID: 7725945197443063864, guid: fcbf71ad5aaed2c478c8064b1d756a1c,
+        type: 3}
+      offset: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      offsetMode: 0
+      showTileWithPrefab: 0
+      showPrefabPreviewInTilePalette: 1
+    obj: {fileID: 0}
 --- !u!1001 &855521518455826628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -797,7 +811,7 @@ PrefabInstance:
     - target: {fileID: 7725945197443063866, guid: fcbf71ad5aaed2c478c8064b1d756a1c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.5
+      value: 5.48
       objectReference: {fileID: 0}
     - target: {fileID: 7725945197443063866, guid: fcbf71ad5aaed2c478c8064b1d756a1c,
         type: 3}

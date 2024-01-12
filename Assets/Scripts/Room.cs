@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     [field: SerializeField] public bool IsSecretRoom { get; private set; }
     [field: Space]
     [field: SerializeField] public int Difficulty { get; private set; }
-    [field: SerializeField] public string Element { get; private set; } = "todo";
+    [field: SerializeField] public Element Element { get; private set; }
     [field: Space]
     [field: SerializeField] public Vector2Int Size { get; private set; } = Vector2Int.one;
     [field: Space]
