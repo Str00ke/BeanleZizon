@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4701568886054207898}
   - component: {fileID: 488600920994884842}
   - component: {fileID: 7942867630264945536}
+  - component: {fileID: 809145850687646577}
   m_Layer: 0
   m_Name: Flamethrower
   m_TagString: Untagged
@@ -4812,13 +4813,15 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
+  m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
+  m_UseCustomTrailVertexStreams: 0
+  m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4828,3 +4831,24 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &809145850687646577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4380068197956741716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a64c3f37f25b7341976210bee531236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damages: 1
+  hasInfiniteLifetime: 0
+  lifetime: 0.3
+  knockbackSpeed: 3
+  knockbackDuration: 0.5
+  destroyOnHit:
+    serializedVersion: 2
+    m_Bits: 0
+  element: 1

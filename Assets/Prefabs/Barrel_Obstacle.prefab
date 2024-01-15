@@ -29,15 +29,9 @@ Transform:
   m_GameObject: {fileID: 7725945197443063864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-<<<<<<< Updated upstream
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
-=======
-  m_LocalPosition: {x: 10.185244, y: 3.4851635, z: -2.375623}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
-  m_ConstrainProportionsScale: 0
->>>>>>> Stashed changes
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -152,7 +146,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.007828951, y: -0.01286602}
+  m_Offset: {x: -0.011506557, y: -0.01286602}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -163,7 +157,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.336497, y: 4.886528}
+  m_Size: {x: 3.9111547, y: 4.7318573}
   m_EdgeRadius: 0
 --- !u!114 &8415214612363138839
 MonoBehaviour:
