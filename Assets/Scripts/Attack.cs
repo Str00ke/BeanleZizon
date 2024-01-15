@@ -34,9 +34,9 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (((1 << collision.gameObject.layer) & destroyOnHit) != 0)
+        if (collision.TryGetComponent(out ExplosiveBarrel barrel))
         {
-            GameObject.Destroy(gameObject);
+            barrel.ApplyHit(this);
         }
     }
 }

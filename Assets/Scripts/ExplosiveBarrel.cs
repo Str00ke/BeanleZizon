@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosiveBarrel : MonoBehaviour
@@ -43,23 +41,23 @@ public class ExplosiveBarrel : MonoBehaviour
         GameObject.Instantiate(attackPrefab, transform.position, transform.rotation);
     }
 
-    private void ApplyHit(Attack attack)
+    public void ApplyHit(Attack attack)
     {
-        if(attack == null) 
+        if (attack == null)
             return;
 
-        if(attack.element == Element.Fire)
+        if (canExpload == true && attack.element == Element.Fire)
         {
             activated = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnParticleCollision(GameObject other)
     {
-        if ((hitLayers & (1 << collision.gameObject.layer)) == (1 << collision.gameObject.layer))
+        if ((hitLayers & (1 << other.layer)) == (1 << other.layer))
         {
             // Collided with hitbox
-            Attack attack = collision.gameObject.GetComponent<Attack>();
+            Attack attack = other.GetComponent<Attack>();
             ApplyHit(attack);
         }
     }
