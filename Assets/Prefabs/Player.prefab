@@ -266,6 +266,8 @@ MonoBehaviour:
     type: 3}
   fireAttackPrefab: {fileID: 4380068197956741716, guid: 2948d2ff88daae54e93814d5c3495509,
     type: 3}
+  waterAttackPrefab: {fileID: 4380068197956741716, guid: e45a9b22a78145649ba32ae59bd6d3d6,
+    type: 3}
   attackSpawnPoint: {fileID: 3061304261252655527}
   attackCooldown: 0.3
   orientation: 1
