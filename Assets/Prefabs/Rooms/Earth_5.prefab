@@ -77,7 +77,7 @@ MonoBehaviour:
   m_mapBounds:
     m_Center: {x: 5.5, y: 4.5, z: 0}
     m_Extent: {x: 5.5, y: 4.5, z: 0}
-  m_tileset: {fileID: 11400000, guid: 01e213563370782439bb825da623a669, type: 2}
+  m_tileset: {fileID: 11400000, guid: 7feeb10e11b90424f861b8dc0701733e, type: 2}
   m_minGridX: 0
   m_minGridY: 0
   m_maxGridX: 10
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_tilemaps:
   - {fileID: 1164001877029012502}
   - {fileID: 4495100732910442087}
-  m_selectedIndex: 1
+  m_selectedIndex: 0
   m_unselectedColorMultiplier: 1
   m_defaultTilemapWindowVisible: 0
   m_displayTilemapRList: 1
