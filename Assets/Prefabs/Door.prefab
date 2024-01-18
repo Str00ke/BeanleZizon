@@ -148,6 +148,12 @@ MonoBehaviour:
     sprite: {fileID: -1318996922, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
   - variationId: Green
     sprite: {fileID: -1177285493, guid: d50f42d488f0ba64b95cbc973a2c6ce4, type: 3}
+  - variationId: Fire
+    sprite: {fileID: 1800458882, guid: 2772f4d0eff62b842ae5903dd7e6cbb3, type: 3}
+  - variationId: Water
+    sprite: {fileID: -2135325717, guid: ff3c1b5465f40014aa77bb7e475a69dd, type: 3}
+  - variationId: Earth
+    sprite: {fileID: -141968764, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
 --- !u!1 &4596811972292035933
 GameObject:
   m_ObjectHideFlags: 0
