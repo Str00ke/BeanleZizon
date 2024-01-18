@@ -5,5 +5,6 @@ public class ElementCollectible : ACollectible
     protected override void OnCollect()
     {
         Player.Instance.element = element;
+        FindObjectOfType<BasicGeneratorMaster>().OnElementCollected(element);
     }
 }

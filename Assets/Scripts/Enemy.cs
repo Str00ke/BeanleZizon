@@ -124,6 +124,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void UpdateAI()
     {
+        return;
         if (CanMove() && Player.Instance.Room == _room)
         {
             Vector2 enemyToPlayer = (Player.Instance.transform.position - transform.position);

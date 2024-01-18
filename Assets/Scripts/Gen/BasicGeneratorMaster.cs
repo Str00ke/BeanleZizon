@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class BasicGeneratorMaster : MonoBehaviour
@@ -25,18 +28,20 @@ public class BasicGeneratorMaster : MonoBehaviour
     [SerializeField] bool _renderDebug = false;
     [SerializeField] bool _renderRooms = false;
 
+    private GameObject _debugRenderHolder;
+    [SerializeField] private GameObject _dungeonRenderHolder;
+    private GameObject _dungeonRenderHolderInstance;
+
     [SerializeField][Range(1, 5)] int _minSidePathRooms;
     [SerializeField][Range(1, 5)] int _maxSidePathRooms;
 
     [SerializeField][Range(1, 5)] int _minSidePathNbr;
     [SerializeField][Range(1, 5)] int _maxSidePathNbr;
 
-    //TMP
-    [SerializeField] private GameObject _entryRoom;
-    [SerializeField] private List<GameObject> _doorUp = new();
-    [SerializeField] private List<GameObject> _doorDown = new();
-    [SerializeField] private List<GameObject> _doorLeft = new();
-    [SerializeField] private List<GameObject> _doorRight = new();
+    [SerializeField] DungeonData _data;
+
+    private Element _currElement;
+    private BasicRoom _startRoom;
 
     public BasicRoom room(Vector2Int value)
     {
@@ -51,9 +56,28 @@ public class BasicGeneratorMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (_renderDebug)
+            _debugRenderHolder = new GameObject("DebugRenderHolder");
+        if (_renderRooms)
+            _dungeonRenderHolderInstance = Instantiate(_dungeonRenderHolder);
+
         Random.InitState(System.DateTime.Now.Millisecond);
-        Generate();
+        //Generate();
         //UnitTests();
+        _startRoom = new BasicRoom(_startPos, Cardinals.NORTH, null, _renderRooms);
+        _rooms.Add(_startPos, _startRoom);
+        _startRoom.Connections.Add(GetInvertedCardinal(Cardinals.NORTH, true, false));
+        if (_renderDebug)
+        {
+            GameObject tmp = new GameObject("testRoom");
+            tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+            SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
+            sr.sprite = _tmpRoomImg;
+            tmp.transform.position = new Vector3(_startPos.x, _startPos.y, 0);
+            tmp.transform.parent = _debugRenderHolder.transform;
+        }
+        CreateCorridor(_startPos, Cardinals.NORTH, Color.green);
+        _startRoom.SpawnRoom(_data.Rooms.Find(x => x.Name == "EntryRoom").Prefab, null);
     }
 
     // Update is called once per frame
@@ -63,6 +87,10 @@ public class BasicGeneratorMaster : MonoBehaviour
         {
             Reset();
             Generate();
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            OnElementCollected(Element.Earth);
         }
     }
 
@@ -124,18 +152,29 @@ public class BasicGeneratorMaster : MonoBehaviour
         }
     }
 
+    public void OnElementCollected(Element el)
+    {
+        _dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation("Earth");
+        _currElement = el;
+        Generate();
+    }
+
     void Generate()
     {
-        GenenerateGraphMainPath(_startPos, Cardinals.NORTH, true, 0, null);
-        
+        GenenerateGraphMainPath(_startPos + GetOffset(Cardinals.NORTH), Cardinals.NORTH, true, 1, _startRoom);
+
         List<Vector2Int> _fullRoomsList = _rooms.Keys.ToList();
+        _fullRoomsList.RemoveAt(0);
         int sidePathNbr = Random.Range(_minSidePathNbr, _maxSidePathNbr);
         for (int i = 0; i < sidePathNbr; i++) 
         {
             int rnd = Random.Range(0, _fullRoomsList.Count);
-            GenGraphSidePath(_fullRoomsList[rnd], true, 0, Random.Range(_minSidePathRooms, _maxSidePathRooms));
+            GenGraphSidePath(_fullRoomsList[rnd], true, 0, Random.Range(_minSidePathRooms, _maxSidePathRooms), Cardinals.NORTH);
             _fullRoomsList.RemoveAt(rnd);
         }
+
+        if(_renderRooms)
+            GenerateRooms(_rooms.ElementAt(1).Value, _startRoom);
 
         /*
         for (int i = 0; i < _rooms.Count; i++)
@@ -204,6 +243,33 @@ public class BasicGeneratorMaster : MonoBehaviour
         return nextRandCard;
     }
 
+    List<RoomData> GetCorrespondingCardRooms(BasicRoom basicRoom) //sort every room to keep these with doors corresponding with connections
+    {
+        var _dataRooms = _data.Rooms;
+        for (ushort i = 0; i < (ushort)Cardinals.COUNT; i++) //foreach existing directions
+        {
+            Cardinals currC = (Cardinals)i;
+            if (basicRoom.Connections.Contains(currC)) continue; //If false, current room to check does not contain this door orientation
+
+            foreach (var _dRoom in _dataRooms) //foreach room
+            {
+                List<Door> _doors = _dRoom.Doors;
+                Debug.Log(_doors.Count);
+                foreach (Door _door in _doors) //foreach doors in this room
+                {
+                    Debug.Log(_door.Orientation);
+                    Debug.Log(currC);
+                    if (_door.Orientation == UtilsConverter.CardToOrient(currC)) //if a door orient same as searched cardinal, remove it
+                    {
+                        _dataRooms.Remove(_dRoom);
+                        break;
+                    }
+                }
+            }
+        }
+        return _dataRooms;
+    }
+
     List<Vector2Int> GetCorrespondingCardPool(BasicRoom basicRoom) //sort every room to keep these with doors corresponding with connections
     {
         List<Vector2Int> _fullRoomsList = _rooms.Keys.ToList();
@@ -229,6 +295,35 @@ public class BasicGeneratorMaster : MonoBehaviour
         return _fullRoomsList;
     }
 
+    public static Cardinals GetInvertedCardinal(Cardinals baseCardinal, bool invertHorizontal, bool invertVertical)
+    {
+        //Cardinals inverted = ~baseCardinal;
+
+        //bool GetBit(byte value, int bit) => (value & (1 << bit)) != 0;
+
+        //if (GetBit((byte)inverted, 0))
+        //{
+        //    if (GetBit((byte)inverted, 1))
+        //        return Cardinals.NORTH;
+        //    else return Cardinals.EAST;
+        //}
+        //else
+        //{
+        //    if (GetBit((byte)inverted, 1))
+        //        return Cardinals.WEST;
+        //    else return Cardinals.SOUTH;
+        //}
+
+        switch (baseCardinal)
+        {
+            case Cardinals.NORTH: return invertVertical ? Cardinals.SOUTH : Cardinals.NORTH;
+            case Cardinals.SOUTH: return invertVertical ? Cardinals.NORTH : Cardinals.SOUTH;
+            case Cardinals.EAST: return invertHorizontal ? Cardinals.WEST : Cardinals.EAST;
+            case Cardinals.WEST: return invertHorizontal ? Cardinals.EAST : Cardinals.WEST;
+            default: Debug.Log("Get inverted cardinal return error!"); return Cardinals.NORTH;
+        }
+    }
+
     void GenenerateGraphMainPath(Vector2Int pos, Cardinals currCardWay, bool isMainPath, int currIndex, BasicRoom prevRoom)
     {
         
@@ -236,7 +331,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         if (prevRoom != null)
         {
             prevRoom.NextRooms.Add(_currRoom);
-            _currRoom.Connections.Add(currCardWay);
+            _currRoom.Connections.Add(GetInvertedCardinal(currCardWay, false, true));
         }
         _rooms.Add(pos, _currRoom);
         if(_renderDebug)
@@ -246,16 +341,8 @@ public class BasicGeneratorMaster : MonoBehaviour
             SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
             sr.sprite = _tmpRoomImg;
             tmp.transform.position = new Vector3(pos.x, pos.y, 0);
+            tmp.transform.parent = _debugRenderHolder.transform;
         }
-
-
-        currIndex++;
-        if (currIndex == _mapWalkthroughMaxSize)
-        {
-            _endRoomGen = true;
-            return;
-        }
-
         Cardinals nextWay;
         if(currIndex == 0)
         {
@@ -272,30 +359,30 @@ public class BasicGeneratorMaster : MonoBehaviour
             nextWay = keepWay ? currCardWay : nextRandCard[Random.Range(0, nextRandCard.Count)]; //@TODO: Fix main path full circle colliding with own path
         }
 
+        currIndex++;
+        if (currIndex == _mapWalkthroughMaxSize)
+        {
+            _endRoomGen = true;
+            _currRoom.state = BasicRoom.State.BOSS;
+            return;
+        }
+
         CreateCorridor(pos, nextWay, Color.green);
-        _currRoom.Connections.Add(~nextWay);
+        if (prevRoom != null)
+            _currRoom.Connections.Add(GetInvertedCardinal(nextWay, true, false));
+        else
+            _currRoom.Connections.Add(GetInvertedCardinal(currCardWay, false, false));
+
+
 
         GenenerateGraphMainPath(pos + GetOffset(nextWay), nextWay, isMainPath, currIndex, _currRoom);
     }
 
-    void GenerateRooms()
-    {
-        //if (currIndex == 0)
-        //{
-        //    _currRoom = new BasicRoom(pos, _entryRoom, currCardWay, prevRoom, _renderRooms);
-        //}
-        //else
-        //{
-        //    List<GameObject> pool = GetCorrespondingCardPool(currCardWay);
-        //    _currRoom = new BasicRoom(pos, pool[Random.Range(0, pool.Count - 1)], currCardWay, prevRoom, _renderRooms);
-        //}
-    }
+    
 
-    void GenGraphSidePath(Vector2Int parentRoomPos, bool parentIsMainPath, int currProgress, int currMaxProgress)
+    void GenGraphSidePath(Vector2Int parentRoomPos, bool parentIsMainPath, int currProgress, int currMaxProgress, Cardinals parentWay)
     {
-        if (currProgress > currMaxProgress) //Stop current side path
-            return;
-
+        
         BasicRoom _parentRoom;
         if (parentIsMainPath)
             _parentRoom = _rooms[parentRoomPos];
@@ -303,10 +390,19 @@ public class BasicGeneratorMaster : MonoBehaviour
             _parentRoom = _sideRooms[parentRoomPos];
 
         List<Cardinals> possibilities = new();
-        for (int c = 0; c < (int)Cardinals.COUNT; c++)
-            if (!_rooms.ContainsKey(parentRoomPos + GetOffset((Cardinals)c)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset((Cardinals)c)))
-                possibilities.Add((Cardinals)c);
-        if(possibilities.Count == 0)
+        //for (int c = 0; c < (int)Cardinals.COUNT; c++)
+        //    if (!_rooms.ContainsKey(parentRoomPos + GetOffset(c)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(c)))
+        //        possibilities.Add((Cardinals)c);
+        //TODO
+        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.NORTH)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.NORTH)))
+            possibilities.Add(Cardinals.NORTH);
+        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.SOUTH)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.SOUTH)))
+            possibilities.Add(Cardinals.SOUTH);
+        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.EAST)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.EAST)))
+            possibilities.Add(Cardinals.EAST);
+        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.WEST)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.WEST)))
+            possibilities.Add(Cardinals.WEST);
+        if (possibilities.Count == 0)
         {
             Debug.LogWarning("Path enclosed itself!");
             return;
@@ -314,11 +410,33 @@ public class BasicGeneratorMaster : MonoBehaviour
         Cardinals way = possibilities[Random.Range(0, possibilities.Count)];
         Vector2Int newPos = parentRoomPos + GetOffset(way);
         BasicRoom _currRoom = new BasicRoom(newPos, way, _parentRoom, _renderRooms);
-        _currRoom.Connections.Add(way);
+        _currRoom.Connections.Add(GetInvertedCardinal(way, false, true));
         if(parentIsMainPath)
-            room(parentRoomPos).Connections.Add(way);
+        {
+            BasicRoom parent = room(parentRoomPos);
+            parent.Connections.Add(GetInvertedCardinal(way, true, false));
+
+            foreach (var door in parent.NextRooms)
+            {
+                if(door.GraphPos.x == parent.GraphPos.x)
+                {
+                    if (door.GraphPos.y > parent.GraphPos.y) //North
+                        parent.ClosedDoors.Add(Cardinals.NORTH);
+                    else //South
+                        parent.ClosedDoors.Add(Cardinals.SOUTH);
+                }
+                else
+                {
+                    if (door.GraphPos.x > parent.GraphPos.x) //East
+                        parent.ClosedDoors.Add(Cardinals.EAST);
+                    else // West
+                        parent.ClosedDoors.Add(Cardinals.WEST);
+                }
+            }
+
+        }
         else
-            sideRoom(parentRoomPos).Connections.Add(~way);
+            sideRoom(parentRoomPos).Connections.Add(GetInvertedCardinal(way, true, false));
 
         if (_parentRoom != null) _parentRoom.NextRooms.Add(_currRoom);
         _sideRooms.Add(newPos, _currRoom);
@@ -329,13 +447,58 @@ public class BasicGeneratorMaster : MonoBehaviour
             SpriteRenderer sr = tmp.AddComponent<SpriteRenderer>();
             sr.sprite = _tmpRoomImg;
             tmp.transform.position = new Vector3(newPos.x, newPos.y, 0);
+            tmp.transform.parent = _debugRenderHolder.transform;
         }
-        
+
 
         CreateCorridor(parentRoomPos, way, Color.red);
 
-        GenGraphSidePath(newPos, false, currProgress + 1, currMaxProgress);
-        
+        if (currProgress <= currMaxProgress) //Stop current side path
+            GenGraphSidePath(newPos, false, currProgress + 1, currMaxProgress, GetInvertedCardinal(way, true, false));
+        else
+        {
+            _currRoom.state = BasicRoom.State.KEY;
+            return;
+        }
+
+    }
+
+    void GenerateRooms(BasicRoom _room, BasicRoom _parent)
+    {
+        if(_parent == null)
+            _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "EntryRoom").Prefab, _parent);
+        else
+        {
+            /*
+            if(!_room.Connections.Contains(Cardinals.EAST) && !_room.Connections.Contains(Cardinals.WEST) && false) //Can spawn 1x2
+            {
+                if (Random.Range(0, 100) <= 35)
+                {
+                    var arr = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 2 && x.Prefab.GetComponent<Room>().Element == Element.Earth);
+                    _room.SpawnRoom(arr[Random.Range(0, arr.Count)].Prefab, _parent);
+                }
+                else
+                {
+                    var arr = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 1 && x.Prefab.GetComponent<Room>().Element == Element.Earth);
+                    _room.SpawnRoom(arr[Random.Range(0, arr.Count)].Prefab, _parent);
+                }
+            }
+            else
+            {
+                var arr = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 1 && x.Prefab.GetComponent<Room>().Element == Element.Earth);
+                _room.SpawnRoom(arr[Random.Range(0, arr.Count)].Prefab, _parent);
+            }
+            */
+            if(_room.state == BasicRoom.State.KEY)
+                _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "Key Room").Prefab, _parent);
+            else
+            {
+                var arr = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 1 && x.Prefab.GetComponent<Room>().Element == Element.Earth);
+                _room.SpawnRoom(arr[Random.Range(0, arr.Count)].Prefab, _parent);
+            }
+        }
+        _room.TilemapRoom.transform.parent = _dungeonRenderHolderInstance.transform;
+        foreach(BasicRoom child in _room.NextRooms) GenerateRooms(child, _room);
     }
 
     void CreateCorridor(Vector2Int pos, Cardinals nextWay, Color color) //For now, just create line renderer
@@ -352,5 +515,6 @@ public class BasicGeneratorMaster : MonoBehaviour
         Vector3 nextPos = new Vector3(nextVec.x, nextVec.y, 0);
         lr.SetPosition(1, nextPos);
         lr.widthMultiplier = 0.1f;
+        lrGo.transform.parent = _debugRenderHolder.transform;
     }
 }

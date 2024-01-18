@@ -150,7 +150,7 @@ public class Room : MonoBehaviour
         RefreshDoors();
         if (IsStartRoom)
         {
-            Player.Instance.EnterRoom(this);
+            //Player.Instance.EnterRoom(this);
         }
     }
 

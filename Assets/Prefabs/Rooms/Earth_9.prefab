@@ -984,7 +984,7 @@ MonoBehaviour:
   <IsEndRoom>k__BackingField: 0
   <IsSecretRoom>k__BackingField: 0
   <Difficulty>k__BackingField: 1
-  <Element>k__BackingField: 0
+  <Element>k__BackingField: 3
   <Size>k__BackingField: {x: 1, y: 2}
   <TotalTiledSize>k__BackingField: {x: 11, y: 18}
   <Position_DoNotEdit>k__BackingField: {x: 0, y: 0}
