@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     [Header("Attack")]
     public GameObject attackPrefab = null;
     public GameObject fireAttackPrefab = null;
+    public GameObject waterAttackPrefab = null;
     public GameObject attackSpawnPoint = null;
     public float attackCooldown = 0.3f;
     public ORIENTATION orientation = ORIENTATION.FREE;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
     private float lastAttackTime = float.MinValue;
 
     private GameObject _flameThrower;
+    private GameObject _waterThrower;
     public Transform _muzzle = null;
 
     // Input attributes
@@ -107,6 +109,9 @@ public class Player : MonoBehaviour
 
         _flameThrower = Instantiate(original: fireAttackPrefab, parent: _muzzle);
         _flameThrower.SetActive(false);
+
+        _waterThrower = Instantiate(original: waterAttackPrefab, parent: _muzzle);
+        _waterThrower.SetActive(false);
     }
 
     private void Start()
@@ -181,6 +186,7 @@ public class Player : MonoBehaviour
                 UseBomb();
             }
             _flameThrower.SetActive(element == Element.Fire && Input.GetButton("Fire1"));
+            _waterThrower.SetActive(element == Element.Water && Input.GetButton("Fire1"));
         }
         else
         {

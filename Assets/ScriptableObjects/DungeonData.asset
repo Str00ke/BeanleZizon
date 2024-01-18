@@ -98,6 +98,21 @@ MonoBehaviour:
     - {fileID: 2366320182293061799, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
     - {fileID: 9200211685885132900, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
     - {fileID: 7098342937645994936, guid: 8d6542901bf281249b2bafd0cb7596db, type: 3}
+  - <Name>k__BackingField: End Room
+    <Prefab>k__BackingField: {fileID: 9004624771089158077, guid: 0f2a006e3e563b34d8ce61cfcd56ee04,
+      type: 3}
+    <Keys>k__BackingField:
+    - {fileID: 8811995225263093491, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 1272409609975420523, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 3851738043370164738, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 6961520920116160436, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    <Hearts>k__BackingField: []
+    <Doors>k__BackingField:
+    - {fileID: 7086764963027202474, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 4467891004978942087, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 3486586924991504512, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 3929228635046371651, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
+    - {fileID: 7509346884582788110, guid: 0f2a006e3e563b34d8ce61cfcd56ee04, type: 3}
   - <Name>k__BackingField: EntryRoom
     <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 2d0d7a0eaee99e7479d78c419651dcb4,
       type: 3}
@@ -118,6 +133,7 @@ MonoBehaviour:
     - {fileID: 6405958939227534804, guid: 32fe236752ac6b0438c4fe218d244a4a, type: 3}
     - {fileID: 5405746572390907517, guid: 32fe236752ac6b0438c4fe218d244a4a, type: 3}
     - {fileID: 7949576206243550948, guid: 32fe236752ac6b0438c4fe218d244a4a, type: 3}
+    - {fileID: 1907044733989422603, guid: 32fe236752ac6b0438c4fe218d244a4a, type: 3}
   - <Name>k__BackingField: Fire_2
     <Prefab>k__BackingField: {fileID: 9004624771089158077, guid: 27939a040d309434496a83f78e039363,
       type: 3}
@@ -167,6 +183,26 @@ MonoBehaviour:
     - {fileID: 8403686604079098878, guid: dd48261b66cba62498c3c11c77f16d57, type: 3}
     - {fileID: 5085449289775909197, guid: dd48261b66cba62498c3c11c77f16d57, type: 3}
     - {fileID: 62203719379188245, guid: dd48261b66cba62498c3c11c77f16d57, type: 3}
+  - <Name>k__BackingField: Fire_7
+    <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 5737ad5cce0ba55498d83ad5e78d464a,
+      type: 3}
+    <Keys>k__BackingField: []
+    <Hearts>k__BackingField: []
+    <Doors>k__BackingField:
+    - {fileID: 7214244675168433022, guid: 5737ad5cce0ba55498d83ad5e78d464a, type: 3}
+    - {fileID: 5489488226115365778, guid: 5737ad5cce0ba55498d83ad5e78d464a, type: 3}
+    - {fileID: 5122583586779797224, guid: 5737ad5cce0ba55498d83ad5e78d464a, type: 3}
+    - {fileID: 5454477895735762382, guid: 5737ad5cce0ba55498d83ad5e78d464a, type: 3}
+  - <Name>k__BackingField: Fire_8
+    <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 8647d45f7708933478dd5600f68426c6,
+      type: 3}
+    <Keys>k__BackingField: []
+    <Hearts>k__BackingField: []
+    <Doors>k__BackingField:
+    - {fileID: 7214244675168433022, guid: 8647d45f7708933478dd5600f68426c6, type: 3}
+    - {fileID: 5489488226115365778, guid: 8647d45f7708933478dd5600f68426c6, type: 3}
+    - {fileID: 5122583586779797224, guid: 8647d45f7708933478dd5600f68426c6, type: 3}
+    - {fileID: 5454477895735762382, guid: 8647d45f7708933478dd5600f68426c6, type: 3}
   - <Name>k__BackingField: Key Room
     <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 55e13484d46b77a458fd71c4ed20a5c9,
       type: 3}
@@ -181,17 +217,6 @@ MonoBehaviour:
     - {fileID: 3069521595050654311, guid: 55e13484d46b77a458fd71c4ed20a5c9, type: 3}
     - {fileID: 7010812607306779444, guid: 55e13484d46b77a458fd71c4ed20a5c9, type: 3}
     - {fileID: 7286344472670117928, guid: 55e13484d46b77a458fd71c4ed20a5c9, type: 3}
-  - <Name>k__BackingField: Room1
-    <Prefab>k__BackingField: {fileID: 4167186206395494075, guid: 5f2601cc89bdd9545968470c924012dd,
-      type: 3}
-    <Keys>k__BackingField:
-    - {fileID: 7412916673387026357, guid: 5f2601cc89bdd9545968470c924012dd, type: 3}
-    - {fileID: 7518942548645280547, guid: 5f2601cc89bdd9545968470c924012dd, type: 3}
-    <Hearts>k__BackingField:
-    - {fileID: 7127593185237204017, guid: 5f2601cc89bdd9545968470c924012dd, type: 3}
-    <Doors>k__BackingField:
-    - {fileID: 5134006859118848995, guid: 5f2601cc89bdd9545968470c924012dd, type: 3}
-    - {fileID: 9036257438450951133, guid: 5f2601cc89bdd9545968470c924012dd, type: 3}
   - <Name>k__BackingField: Room2
     <Prefab>k__BackingField: {fileID: 9004624771089158077, guid: bbd78ba59d709dd4ba5894b7d6c56e88,
       type: 3}
@@ -221,6 +246,20 @@ MonoBehaviour:
     <Hearts>k__BackingField: []
     <Doors>k__BackingField:
     - {fileID: 3861524343574432358, guid: 1b3c041700faf1248ae17aeffe2c297e, type: 3}
+  - <Name>k__BackingField: Secret Room
+    <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 193b18e60fa0d44478e31d9c3c51aa22,
+      type: 3}
+    <Keys>k__BackingField: []
+    <Hearts>k__BackingField:
+    - {fileID: 5989410987507661033, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 6466545854808729861, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 6146086977055331595, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 95643354553152128, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    <Doors>k__BackingField:
+    - {fileID: 2069171866179601373, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 4912783686383476703, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 1559420078527212722, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
+    - {fileID: 6248780008444006207, guid: 193b18e60fa0d44478e31d9c3c51aa22, type: 3}
   - <Name>k__BackingField: Water_1
     <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: 68d3cd9ca7829aa48ab7f1d031edab85,
       type: 3}
@@ -231,16 +270,6 @@ MonoBehaviour:
     - {fileID: 8477134404376792853, guid: 68d3cd9ca7829aa48ab7f1d031edab85, type: 3}
     - {fileID: 2491617442812991233, guid: 68d3cd9ca7829aa48ab7f1d031edab85, type: 3}
     - {fileID: 4857253488548127376, guid: 68d3cd9ca7829aa48ab7f1d031edab85, type: 3}
-  - <Name>k__BackingField: Water_3
-    <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: a7ad8f2bd9aa93244af8d3fc6ea81360,
-      type: 3}
-    <Keys>k__BackingField: []
-    <Hearts>k__BackingField: []
-    <Doors>k__BackingField:
-    - {fileID: 7088319056564666031, guid: a7ad8f2bd9aa93244af8d3fc6ea81360, type: 3}
-    - {fileID: 6772752847387019358, guid: a7ad8f2bd9aa93244af8d3fc6ea81360, type: 3}
-    - {fileID: 3700628575262629000, guid: a7ad8f2bd9aa93244af8d3fc6ea81360, type: 3}
-    - {fileID: 5331060961512937717, guid: a7ad8f2bd9aa93244af8d3fc6ea81360, type: 3}
   - <Name>k__BackingField: Water_4
     <Prefab>k__BackingField: {fileID: 9004624771089158077, guid: a3ca0c1e815b40248aaac406d0fe8b7c,
       type: 3}
@@ -271,3 +300,13 @@ MonoBehaviour:
     - {fileID: 8677495909189057010, guid: c94bf287f4d4add4db7ac1d90e0dcad1, type: 3}
     - {fileID: 7517269492401893783, guid: c94bf287f4d4add4db7ac1d90e0dcad1, type: 3}
     - {fileID: 1295697049848611745, guid: c94bf287f4d4add4db7ac1d90e0dcad1, type: 3}
+  - <Name>k__BackingField: Water_7
+    <Prefab>k__BackingField: {fileID: 2786395878849647928, guid: da9708305480d5749beeb4ed850ee7cd,
+      type: 3}
+    <Keys>k__BackingField: []
+    <Hearts>k__BackingField: []
+    <Doors>k__BackingField:
+    - {fileID: 7088319056564666031, guid: da9708305480d5749beeb4ed850ee7cd, type: 3}
+    - {fileID: 6772752847387019358, guid: da9708305480d5749beeb4ed850ee7cd, type: 3}
+    - {fileID: 3700628575262629000, guid: da9708305480d5749beeb4ed850ee7cd, type: 3}
+    - {fileID: 5331060961512937717, guid: da9708305480d5749beeb4ed850ee7cd, type: 3}

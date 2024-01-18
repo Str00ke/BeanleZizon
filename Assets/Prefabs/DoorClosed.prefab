@@ -8,6 +8,50 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[2].sprite
+      value: 
+      objectReference: {fileID: -141968764, guid: ba9524d2c0f2e99419c65a044e92af8f,
+        type: 3}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[3].sprite
+      value: 
+      objectReference: {fileID: -556853399, guid: 2772f4d0eff62b842ae5903dd7e6cbb3,
+        type: 3}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[4].sprite
+      value: 
+      objectReference: {fileID: -2135325717, guid: ff3c1b5465f40014aa77bb7e475a69dd,
+        type: 3}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[2].variationId
+      value: Earth
+      objectReference: {fileID: 0}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[3].variationId
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 492694727940334874, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: spritePerTileset.Array.data[4].variationId
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399517271744737979, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 62d424f309efa164c89272c5397076bb,
+        type: 3}
     - target: {fileID: 2807283877054237857, guid: e220ae9ccd75bd04fa295d970d7c2202,
         type: 3}
       propertyPath: m_RootOrder
@@ -63,7 +107,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3125330078996597655, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3125330078996597655, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4031136769944664962, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300050, guid: a0426054a75cf414e8d43607d1129b03,
+        type: 3}
+    - target: {fileID: 4031136769944664962, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513363251479038259, guid: e220ae9ccd75bd04fa295d970d7c2202,
         type: 3}
       propertyPath: m_Sprite
       value: 
@@ -71,10 +136,9 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4513363251479038259, guid: e220ae9ccd75bd04fa295d970d7c2202,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300050, guid: a0426054a75cf414e8d43607d1129b03,
-        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4596811972292035933, guid: e220ae9ccd75bd04fa295d970d7c2202,
         type: 3}
       propertyPath: m_IsActive

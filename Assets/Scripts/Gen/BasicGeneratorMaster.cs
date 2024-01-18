@@ -9,6 +9,14 @@ using Random = UnityEngine.Random;
 
 public class BasicGeneratorMaster : MonoBehaviour
 {
+    public static BasicGeneratorMaster Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(Instance);
+    }
+
     [SerializeField]
     Sprite _tmpRoomImg;
 
@@ -40,8 +48,14 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     [SerializeField] DungeonData _data;
 
+    [SerializeField] WallSpriteSetter _wallSpriteSetter;
+    public WallSpriteSetter WallSpriteSetter => _wallSpriteSetter;
+
     private Element _currElement;
+    public Element CurrElement => _currElement;
     private BasicRoom _startRoom;
+
+    private List<RoomData> _availableRooms = new List<RoomData>();
 
     public BasicRoom room(Vector2Int value)
     {
@@ -90,7 +104,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.S))
         {
-            OnElementCollected(Element.Earth);
+            OnElementCollected(Element.Water);
         }
     }
 
@@ -154,7 +168,7 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     public void OnElementCollected(Element el)
     {
-        _dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation("Earth");
+        //_dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation("Earth");
         _currElement = el;
         Generate();
     }
@@ -174,7 +188,10 @@ public class BasicGeneratorMaster : MonoBehaviour
         }
 
         if(_renderRooms)
+        {
+            _availableRooms = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 1 && x.Prefab.GetComponent<Room>().Element == _currElement/* && x.Prefab.GetComponent<Room>().GetDoors().Count > 2*/);
             GenerateRooms(_rooms.ElementAt(1).Value, _startRoom);
+        }
 
         /*
         for (int i = 0; i < _rooms.Count; i++)
@@ -465,6 +482,7 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void GenerateRooms(BasicRoom _room, BasicRoom _parent)
     {
+
         if(_parent == null)
             _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "EntryRoom").Prefab, _parent);
         else
@@ -493,8 +511,7 @@ public class BasicGeneratorMaster : MonoBehaviour
                 _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "Key Room").Prefab, _parent);
             else
             {
-                var arr = _data.Rooms.FindAll(x => x.Prefab.GetComponent<Room>().Size.y == 1 && x.Prefab.GetComponent<Room>().Element == Element.Earth);
-                _room.SpawnRoom(arr[Random.Range(0, arr.Count)].Prefab, _parent);
+                _room.SpawnRoom(_availableRooms[Random.Range(0, _availableRooms.Count)].Prefab, _parent);
             }
         }
         _room.TilemapRoom.transform.parent = _dungeonRenderHolderInstance.transform;

@@ -273,6 +273,7 @@ MonoBehaviour:
   _minSidePathNbr: 3
   _maxSidePathNbr: 5
   _data: {fileID: 11400000, guid: 909785910ea6a6c4c95aff3005d0d7d8, type: 2}
+  _wallSpriteSetter: {fileID: 11400000, guid: 473db8f1805d52d4ebacead9d9720f14, type: 2}
 --- !u!1 &1543340477
 GameObject:
   m_ObjectHideFlags: 0
