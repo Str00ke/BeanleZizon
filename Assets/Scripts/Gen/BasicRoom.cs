@@ -48,7 +48,7 @@ public class BasicRoom
     {
         _goRoom = GameObject.Instantiate(room, (Vector3Int)_pos, Quaternion.identity);
         _tilemapRoom = _goRoom.GetComponent<Room>();
-
+        _tilemapRoom.Position_DoNotEdit = _graphPos;
         if(prevRoom != null)
         {
             Vector2Int prevPos = prevRoom._pos;

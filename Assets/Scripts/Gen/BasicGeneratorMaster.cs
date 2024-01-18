@@ -25,7 +25,9 @@ public class BasicGeneratorMaster : MonoBehaviour
     [SerializeField] private int _mapWalkthroughMaxSize = 10;
 
     private Dictionary<Vector2Int, BasicRoom> _rooms = new();
+    public Dictionary<Vector2Int, BasicRoom> Rooms => _rooms;
     private Dictionary<Vector2Int, BasicRoom> _sideRooms = new();
+    public Dictionary<Vector2Int, BasicRoom> SideRooms => _sideRooms;
  
     private Vector2Int _startPos = Vector2Int.zero;
 
@@ -92,6 +94,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         }
         CreateCorridor(_startPos, Cardinals.NORTH, Color.green);
         _startRoom.SpawnRoom(_data.Rooms.Find(x => x.Name == "EntryRoom").Prefab, null);
+        _startRoom.TilemapRoom.IsStartRoom = true;
     }
 
     // Update is called once per frame
@@ -144,7 +147,7 @@ public class BasicGeneratorMaster : MonoBehaviour
         
     }
 
-    Vector2Int GetOffset(Cardinals card)
+    public Vector2Int GetOffset(Cardinals card)
     {
         switch (card)
         {
