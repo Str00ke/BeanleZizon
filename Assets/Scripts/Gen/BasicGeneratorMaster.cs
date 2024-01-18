@@ -97,15 +97,15 @@ public class BasicGeneratorMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R)) 
-        {
-            Reset();
-            Generate();
-        }
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            OnElementCollected(Element.Water);
-        }
+        //if(Input.GetKeyDown(KeyCode.R)) 
+        //{
+        //    Reset();
+        //    Generate();
+        //}
+        //if(Input.GetKeyDown(KeyCode.S))
+        //{
+        //    OnElementCollected(Element.Water);
+        //}
     }
 
     void UnitTests()
