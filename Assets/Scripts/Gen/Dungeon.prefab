@@ -49,15 +49,3 @@ MonoBehaviour:
     tilesets:
     - tilemapLayer: Floor
       tileset: {fileID: 11400000, guid: 01e213563370782439bb825da623a669, type: 2}
-  - variationId: Earth
-    tilesets:
-    - tilemapLayer: Floor
-      tileset: {fileID: 11400000, guid: b4c45dc0ac83ac045b7c8fcc19b7d7c6, type: 2}
-  - variationId: Water
-    tilesets:
-    - tilemapLayer: Floor
-      tileset: {fileID: 11400000, guid: b4c45dc0ac83ac045b7c8fcc19b7d7c6, type: 2}
-  - variationId: Fire
-    tilesets:
-    - tilemapLayer: Floor
-      tileset: {fileID: 11400000, guid: b4c45dc0ac83ac045b7c8fcc19b7d7c6, type: 2}

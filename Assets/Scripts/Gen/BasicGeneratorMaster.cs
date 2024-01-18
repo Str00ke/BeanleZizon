@@ -168,7 +168,10 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     public void OnElementCollected(Element el)
     {
-        //_dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation("Earth");
+        //if(el != Element.None)
+        //    _dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation(el.ToString());
+
+        _dungeonRenderHolderInstance?.GetComponent<TilesetSwapper>().SetVariation("Default");
         _currElement = el;
         Generate();
     }

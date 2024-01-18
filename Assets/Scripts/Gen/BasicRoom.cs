@@ -90,37 +90,47 @@ public class BasicRoom
                 TilesetSpriteSwapper.TilesetSprite tSpr;
                 WallSpriteSetter setter = BasicGeneratorMaster.Instance.WallSpriteSetter;
 
-                var val = setter.Sets.Find(x => x.element == BasicGeneratorMaster.Instance.CurrElement);
-                door.wallGo.GetComponent<TilesetSpriteSwapper>().spritePerTileset.RemoveAll(x => x.variationId == val.elementName);
-                tSpr.variationId = val.elementName;
+                WallSpriteSetter.ElementSprSet val;
+                if (_tilemapRoom.Element == Element.None)
+                {
+                    val = setter.Sets.Find(x => x.elementName == "None");
+                    tSpr.variationId = "None";
+                }
+                else
+                {
+                    val = setter.Sets.Find(x => x.element == BasicGeneratorMaster.Instance.CurrElement);
+                    tSpr.variationId = val.elementName;
+                    door.wallGo.GetComponent<TilesetSpriteSwapper>().spritePerTileset.RemoveAll(x => x.variationId == val.elementName);
+                }
+
                 door.wallGo.transform.rotation = Quaternion.identity;
 
                 switch (UtilsConverter.OrientToCard(door.Orientation))
                 {
                     case Cardinals.NORTH:
-                        tSpr.sprite = val.NorthSpr.sprite; 
+                        tSpr.sprite = val.NorthSpr.sprite;
                         break;
                     case Cardinals.SOUTH:
                         door.wallGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
-                        tSpr.sprite = val.SouthSpr.sprite; 
+                        tSpr.sprite = val.SouthSpr.sprite;
                         break;
                     case Cardinals.EAST:
                         door.wallGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
-                        tSpr.sprite = val.EastSpr.sprite; 
+                        tSpr.sprite = val.EastSpr.sprite;
                         break;
                     case Cardinals.WEST:
                         door.wallGo.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
-                        tSpr.sprite = val.WestSpr.sprite; 
+                        tSpr.sprite = val.WestSpr.sprite;
                         break;
                     default:
-                        tSpr.sprite = val.NorthSpr.sprite; 
+                        tSpr.sprite = val.NorthSpr.sprite;
                         break;
                 }
                 door.SetState(Door.STATE.WALL);
                 door.wallGo.GetComponent<TilesetSpriteSwapper>().spritePerTileset.Add(tSpr);
                 door.wallGo.GetComponent<TilesetSpriteSwapper>().SetVariation(val.elementName);
-                
-            } 
+
+            }
             else if(ClosedDoors.Contains(UtilsConverter.OrientToCard(door.Orientation))) door.SetState(Door.STATE.CLOSED);
             else door.SetState(Door.STATE.OPEN);
         }

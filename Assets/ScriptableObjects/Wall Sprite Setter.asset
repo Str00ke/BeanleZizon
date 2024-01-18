@@ -17,10 +17,10 @@ MonoBehaviour:
     elementName: Earth
     NorthSpr:
       cardinal: 17
-      sprite: {fileID: 1744126567, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
+      sprite: {fileID: -141968764, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
     SouthSpr:
       cardinal: 0
-      sprite: {fileID: -141968764, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
+      sprite: {fileID: 1744126567, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
     EastSpr:
       cardinal: 1
       sprite: {fileID: 916061902, guid: ba9524d2c0f2e99419c65a044e92af8f, type: 3}
@@ -45,13 +45,27 @@ MonoBehaviour:
     elementName: Water
     NorthSpr:
       cardinal: 17
-      sprite: {fileID: -370712397, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+      sprite: {fileID: -2135325717, guid: ff3c1b5465f40014aa77bb7e475a69dd, type: 3}
     SouthSpr:
       cardinal: 0
-      sprite: {fileID: -370712397, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+      sprite: {fileID: -41702194, guid: ff3c1b5465f40014aa77bb7e475a69dd, type: 3}
     EastSpr:
       cardinal: 1
-      sprite: {fileID: -370712397, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+      sprite: {fileID: 1142146055, guid: ff3c1b5465f40014aa77bb7e475a69dd, type: 3}
     WestSpr:
       cardinal: 16
-      sprite: {fileID: -370712397, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+      sprite: {fileID: 600267360, guid: ff3c1b5465f40014aa77bb7e475a69dd, type: 3}
+  - element: 0
+    elementName: None
+    NorthSpr:
+      cardinal: 17
+      sprite: {fileID: 1560171651, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+    SouthSpr:
+      cardinal: 0
+      sprite: {fileID: -791578804, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+    EastSpr:
+      cardinal: 1
+      sprite: {fileID: -1338044224, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
+    WestSpr:
+      cardinal: 16
+      sprite: {fileID: -899903331, guid: a0426054a75cf414e8d43607d1129b03, type: 3}
