@@ -174,7 +174,9 @@ MonoBehaviour:
   hitLayers:
     serializedVersion: 2
     m_Bits: 256
-  timeBetweenExplosion: 4
+  timeBetweenExplosion: 8
   timeBeforeExplosion: 0.2
   attackPrefab: {fileID: 2185964762067344080, guid: 8862e3d5aaa163242bd4d8a43709e02c,
     type: 3}
+  Collider: {fileID: 1767114716}
+  SpriteRenderer: {fileID: 7725945197443063813}
