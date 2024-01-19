@@ -185,6 +185,7 @@ public class BasicGeneratorMaster : MonoBehaviour
 
         List<Vector2Int> _fullRoomsList = _rooms.Keys.ToList();
         _fullRoomsList.RemoveAt(0);
+        _fullRoomsList.RemoveAt(_fullRoomsList.Count - 1); //Remove last room as its a dead end, no side should be gen by it
         int sidePathNbr = Random.Range(_minSidePathNbr, _maxSidePathNbr);
         for (int i = 0; i < sidePathNbr; i++) 
         {
@@ -357,7 +358,11 @@ public class BasicGeneratorMaster : MonoBehaviour
             _currRoom.Connections.Add(GetInvertedCardinal(currCardWay, false, true));
         }
         _rooms.Add(pos, _currRoom);
-        if(_renderDebug)
+        if(currIndex == _mapWalkthroughMaxSize - 1)
+        {
+            _rooms.Add(pos + GetOffset(Cardinals.NORTH), _currRoom);
+        }
+        if (_renderDebug)
         {
             GameObject tmp = new GameObject("testRoom");
             tmp.transform.localScale = new Vector3(0.5f, 0.5f, 1);
@@ -367,10 +372,11 @@ public class BasicGeneratorMaster : MonoBehaviour
             tmp.transform.parent = _debugRenderHolder.transform;
         }
         Cardinals nextWay;
-        if(currIndex == 0)
+        if(currIndex == 0 || currIndex == _mapWalkthroughMaxSize - 2)
         {
             nextWay = Cardinals.NORTH;
         }
+
         else
         {
             bool keepWay = Random.Range(0, 100) <= 50;
@@ -413,18 +419,10 @@ public class BasicGeneratorMaster : MonoBehaviour
             _parentRoom = _sideRooms[parentRoomPos];
 
         List<Cardinals> possibilities = new();
-        //for (int c = 0; c < (int)Cardinals.COUNT; c++)
-        //    if (!_rooms.ContainsKey(parentRoomPos + GetOffset(c)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(c)))
-        //        possibilities.Add((Cardinals)c);
-        //TODO
-        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.NORTH)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.NORTH)))
-            possibilities.Add(Cardinals.NORTH);
-        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.SOUTH)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.SOUTH)))
-            possibilities.Add(Cardinals.SOUTH);
-        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.EAST)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.EAST)))
-            possibilities.Add(Cardinals.EAST);
-        if (!_rooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.WEST)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset(Cardinals.WEST)))
-            possibilities.Add(Cardinals.WEST);
+        for (int c = 0; c < (int)Cardinals.COUNT; c++)
+            if (!_rooms.ContainsKey(parentRoomPos + GetOffset((Cardinals)c)) && !_sideRooms.ContainsKey(parentRoomPos + GetOffset((Cardinals)c)))
+                possibilities.Add((Cardinals)c);
+        
         if (possibilities.Count == 0)
         {
             Debug.LogWarning("Path enclosed itself!");
@@ -491,6 +489,10 @@ public class BasicGeneratorMaster : MonoBehaviour
 
         if(_parent == null)
             _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "EntryRoom").Prefab, _parent);
+        else if(_room == _rooms.ElementAt(_rooms.Count - 1).Value)
+        {
+            _room.SpawnRoom(_data.Rooms.Find(x => x.Name == "End Room").Prefab, _parent);
+        }
         else
         {
             /*
