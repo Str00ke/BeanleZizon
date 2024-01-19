@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     public GameObject attackPrefab = null;
     public GameObject fireAttackPrefab = null;
     public GameObject waterAttackPrefab = null;
+    public GameObject earthAttackPrefab = null;
     public GameObject attackSpawnPoint = null;
     public float attackCooldown = 0.3f;
     public ORIENTATION orientation = ORIENTATION.FREE;
@@ -302,7 +303,7 @@ public class Player : MonoBehaviour
         {
             Element.Fire => null,
             Element.Water => null,
-            Element.Earth => null,
+            Element.Earth => earthAttackPrefab,
             Element.None or _ => attackPrefab,
         };
 

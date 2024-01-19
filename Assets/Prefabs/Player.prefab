@@ -268,6 +268,8 @@ MonoBehaviour:
     type: 3}
   waterAttackPrefab: {fileID: 4380068197956741716, guid: e45a9b22a78145649ba32ae59bd6d3d6,
     type: 3}
+  earthAttackPrefab: {fileID: 2185964762067344080, guid: 8695b37f6c1ceca419cb5bd4340f8086,
+    type: 3}
   attackSpawnPoint: {fileID: 3061304261252655527}
   attackCooldown: 0.3
   orientation: 1
