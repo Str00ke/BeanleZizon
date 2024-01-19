@@ -181,7 +181,17 @@ public class BasicGeneratorMaster : MonoBehaviour
 
     void Generate()
     {
-        GenenerateGraphMainPath(_startPos + GetOffset(Cardinals.NORTH), Cardinals.NORTH, true, 1, _startRoom);
+        try
+        {
+            GenenerateGraphMainPath(_startPos + GetOffset(Cardinals.NORTH), Cardinals.NORTH, true, 1, _startRoom);
+        }
+        catch (Exception)
+        {
+            Debug.LogError("Generation Failed! Retrying...");
+            Reset();
+            Start();
+            return;
+        }
 
         List<Vector2Int> _fullRoomsList = _rooms.Keys.ToList();
         _fullRoomsList.RemoveAt(0);
