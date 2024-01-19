@@ -14,7 +14,7 @@ public class BasicGeneratorMaster : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(Instance);
+        //DontDestroyOnLoad(Instance);
     }
 
     [SerializeField]
@@ -126,13 +126,14 @@ public class BasicGeneratorMaster : MonoBehaviour
     void Reset()
     {
         _endRoomGen = false;
-
+        Destroy(_dungeonRenderHolder);
+        _availableRooms.Clear();
         var arr = FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None);
         var arr2 = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
         var arr3 = FindObjectsByType<Room>(FindObjectsSortMode.None);
         foreach (var obj in arr)
         {
-            Destroy(obj.gameObject);
+            if(obj.transform.parent.name != "Player") Destroy(obj.gameObject);
         }
         foreach (var obj in arr2)
         {
