@@ -9,9 +9,14 @@ public class ExplosiveBarrel : MonoBehaviour
     private float timer = 0f;
     private bool activated = false;
     private bool canExpload = true;
+    public Collider2D Collider;
+    public SpriteRenderer SpriteRenderer;
 
     private void Update()
     {
+        Collider.enabled = canExpload;
+        SpriteRenderer.enabled = canExpload;
+
         //Time only advence when barrel is activated or is on cooldown
         if (activated || !canExpload)
             timer += Time.deltaTime;
