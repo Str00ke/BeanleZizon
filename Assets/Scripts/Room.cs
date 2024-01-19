@@ -1,6 +1,7 @@
 ﻿using CreativeSpore.SuperTilemapEditor;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Represents a single room in your dungeon A room has an (i,j) integer position and a (di, dj)
@@ -8,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class Room : MonoBehaviour
 {
-    [field: SerializeField] public bool IsStartRoom { get; private set; }
+    [field: SerializeField] public bool IsStartRoom { get; set; }
     [field: SerializeField] public bool IsEndRoom { get; private set; }
     [field: SerializeField] public bool IsSecretRoom { get; private set; }
     [field: Space]
@@ -16,8 +17,9 @@ public class Room : MonoBehaviour
     [field: SerializeField] public Element Element { get; private set; }
     [field: Space]
     [field: SerializeField] public Vector2Int Size { get; private set; } = Vector2Int.one;
+    [field: SerializeField] public Vector2Int TotalTiledSize { get; private set; } = Vector2Int.one;
     [field: Space]
-    [field: SerializeField] public Vector2Int Position_DoNotEdit { get; private set; } = Vector2Int.zero;
+    [field: SerializeField] public Vector2Int Position_DoNotEdit { get; set; } = Vector2Int.zero;
 
     private TilemapGroup _tilemapGroup;
     private List<Door> doors = null;
@@ -108,13 +110,26 @@ public class Room : MonoBehaviour
     /// </summary>
     public Room GetAdjacentRoom(Utils.ORIENTATION orientation, Vector3 from)
     {
+        BasicGeneratorMaster gen = FindObjectOfType<BasicGeneratorMaster>();
         Vector2Int dir = Utils.OrientationToDir(orientation);
         Vector2Int adjacentPos = Position_DoNotEdit + dir + GetPositionOffset(from);
-        Room adjacentRoom = Room.allRooms.Find(x =>
-               adjacentPos.x >= x.Position_DoNotEdit.x
-            && adjacentPos.y >= x.Position_DoNotEdit.y
-            && adjacentPos.x < x.Position_DoNotEdit.x + x.Size.x
-            && adjacentPos.y < x.Position_DoNotEdit.y + x.Size.y);
+        //Room adjacentRoom = Room.allRooms.Find(x =>
+        //       adjacentPos.x >= x.Position_DoNotEdit.x
+        //    && adjacentPos.y >= x.Position_DoNotEdit.y
+        //    && adjacentPos.x < x.Position_DoNotEdit.x + x.Size.x
+        //    && adjacentPos.y < x.Position_DoNotEdit.y + x.Size.y);
+        Cardinals card = UtilsConverter.OrientToCard(orientation);
+        Cardinals inv = BasicGeneratorMaster.GetInvertedCardinal(card, true, false);
+        Vector2Int offset = gen.GetOffset(inv);
+
+        Vector2Int newPos = Position_DoNotEdit + offset;
+        Room adjacentRoom = null;
+        if (gen.Rooms.ContainsKey(newPos))
+            adjacentRoom = gen.room(newPos).TilemapRoom;
+        else if (gen.SideRooms.ContainsKey(newPos))
+            adjacentRoom = gen.sideRoom(newPos).TilemapRoom;
+        else
+            Debug.LogError("Room GetAdjacentRoom return null!");
         return adjacentRoom;
     }
 

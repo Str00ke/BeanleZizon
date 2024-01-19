@@ -235,8 +235,9 @@ MonoBehaviour:
   <IsEndRoom>k__BackingField: 0
   <IsSecretRoom>k__BackingField: 0
   <Difficulty>k__BackingField: 2
-  <Element>k__BackingField: 3
+  <Element>k__BackingField: 2
   <Size>k__BackingField: {x: 1, y: 1}
+  <TotalTiledSize>k__BackingField: {x: 11, y: 9}
   <Position_DoNotEdit>k__BackingField: {x: 0, y: 0}
 --- !u!114 &3207279181926465553
 MonoBehaviour:
@@ -1017,6 +1018,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 6610912639909285364, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: _orientation
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1096,6 +1102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610912639909285364, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: _orientation
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1571,6 +1582,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 6610912639909285364, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: _orientation
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1964,6 +1980,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610912639909285364, guid: e220ae9ccd75bd04fa295d970d7c2202,
+        type: 3}
+      propertyPath: _orientation
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

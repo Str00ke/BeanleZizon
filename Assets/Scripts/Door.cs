@@ -25,6 +25,7 @@ public class Door : MonoBehaviour
 
     public const string PLAYER_NAME = "Player";
 
+    [SerializeField]
     private Utils.ORIENTATION _orientation = Utils.ORIENTATION.NONE;
     public Utils.ORIENTATION Orientation
     { get { return _orientation; } }
@@ -122,6 +123,10 @@ public class Door : MonoBehaviour
         if (openGo) { openGo.SetActive(false); }
         if (wallGo) { wallGo.SetActive(false); }
         if (secretGo) { secretGo.SetActive(false); }
+        closedGo.SetActive(false);
+        openGo.SetActive(false);
+        wallGo.SetActive(false);
+        secretGo.SetActive(false);
         _state = state;
         switch (_state)
         {
